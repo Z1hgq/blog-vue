@@ -7,7 +7,7 @@
             <div class="banner_in">
               <!-- <img :src="img.desc_icon"> -->
               <div><b>{{img.desc1}}</b></div>
-              <p>{{img.desc2}}</p>
+              <!-- <p>{{img.desc2}}</p> -->
             </div>
             <!-- <div class="pre_btn" :style="note" slot="button-prev">
               <img src="./images/left_icon.png">
@@ -61,7 +61,7 @@
                     slideShadows : true
                 },
                   autoplay:{
-                      delay:5000
+                      delay:3500
                   },
                   loop:true,
                 //   navigation: {
@@ -109,12 +109,13 @@ div,p,a,span{
         Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 .banner{
-  margin-top: 5px;
+  margin-top: 45px;
+  background: #000;
 }
 .banner_img{
   width: 100%;
   height: auto;
-  box-shadow: 8px 8px 8px #aaa;
+  /* box-shadow: 8px 8px 8px #777; */
 }
 .banner_in{
   position: absolute;

@@ -18,9 +18,6 @@
         </router-link>
     </div>
   </div>
-  <br>
-  <br>
-  <br>
   <router-view/>
   </div>
 </template>
@@ -111,9 +108,9 @@ a{
           height: 100%;
           float: right;
           &:hover{
-              border-bottom: 2px solid #FF9933;
+              border-bottom: 2px solid #FF6600;
               a{
-                  color:#FF9933;
+                  color:#FF6600;
               }
           }
           a{
@@ -132,9 +129,9 @@ a{
           }
       }
       .act{
-        border-bottom: 2px solid #FF9933;
+        border-bottom: 2px solid #FF6600;
         a{
-          color:#FF9933;
+          color:#FF6600;
         }
       }
   }
