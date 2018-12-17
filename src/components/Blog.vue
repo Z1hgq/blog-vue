@@ -19,7 +19,9 @@
             </div>
         </div>
         <div class="content">
-
+            <div class="content_el">
+                
+            </div>
         </div>
         <div class="info">
 
@@ -56,6 +58,15 @@ export default {
                     imgUrl:'/static/img/classification.png',
                     name:'分类测试'
                 },
+            ],
+            blogs:[
+                {
+                    title:'',
+                    time:'',
+                    keywords:[],
+                    tags:[],
+                    description:'',
+                }
             ]
         }
     }
@@ -78,6 +89,7 @@ p,div{
     .classification{
         width:160px;
         height: auto;
+        float: left;
         .classification_el{
             width: 160px;
             height: 50px;
@@ -114,6 +126,18 @@ p,div{
             }
         }
 
+    }
+    .content{
+        width: 840px;
+        height: auto;
+        min-height: 640px;
+        float: left;
+    }
+    .info{
+        width: 200px;
+        height: auto;
+        min-height: 640px;
+        float: left;
     }
 }
 </style>
