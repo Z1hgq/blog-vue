@@ -91,9 +91,10 @@ p,div{
         height: auto;
         float: left;
         .classification_el{
-            width: 160px;
+            width: 164px;
             height: 50px;
             box-shadow: 1px 0 0px #FF6600;
+            display: flex;
             &:hover{
                 border-right: 4px solid #FF6600;
                 // border-top: 1px solid #FF6600;
@@ -106,7 +107,7 @@ p,div{
             .cla_img{
                 width: 50px;
                 height: 50px;
-                float: left;
+                // float: left;
                 img{
                     width: 25px;
                     height: 25px;
@@ -120,12 +121,12 @@ p,div{
                 text-align: center;
                 width: 110px;
                 height: 50px;
-                float: left;
+                // float: left;
                 color: #009966;
-                margin-top: -5px;
+                // margin-top: -5px;
+                padding-top: 15px;
             }
         }
-
     }
     .content{
         width: 840px;
@@ -134,7 +135,7 @@ p,div{
         float: left;
     }
     .info{
-        width: 200px;
+        width: 196px;
         height: auto;
         min-height: 640px;
         float: left;
