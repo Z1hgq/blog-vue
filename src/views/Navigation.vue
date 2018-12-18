@@ -1,5 +1,6 @@
 <template>
-  <div class="nav">
+  <div>
+      <div class="nav">
     <div class="icon">
       <a href="/"  rel="noopener noreferrer">
         <div>
@@ -16,6 +17,8 @@
             <div><a :href="tap.link">{{tap.name}}</a></div>
         </div>
     </div>
+  </div>
+    <router-view/>
   </div>
 </template>
 <script>
@@ -35,7 +38,7 @@ export default {
           {
               icon:'/static/img/z1hgq.png',
               name:'摄影',
-              link:'/',
+              link:'/photo',
               active:false
           },
           {
@@ -50,11 +53,12 @@ export default {
 };
 </script>
 <style lang="less">
-a{
-    text-decoration: none;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+a,p{ 
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
         Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
+    font-size: 18px;
+    text-decoration: none;
+} 
 .nav {
   height: 60px;
   background-color: #fff;
@@ -110,6 +114,7 @@ a{
           }
           a{
               color:#009966;
+              padding-left: 15px;
           }
           img{
               width: 20px;
