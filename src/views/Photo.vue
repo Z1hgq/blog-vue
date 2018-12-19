@@ -109,7 +109,7 @@ div,p,a,span{
         Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 .banner{
-  margin-top: 45px;
+  margin-top: 60px;
   background: #000;
 }
 .banner_img{
