@@ -1,6 +1,6 @@
 # blog-vue
 
-> blog powered by vue
+> blog powered by vue vue-router nodejs mongodb iview
 
 ## Build Setup
 
