@@ -59,7 +59,7 @@
 }
 .clsinput{
     display: flex;
-    height: 80px;
+    height: 90px;
     border: 2px solid #2d8cf0;
 }
 .demo-upload-list>img{

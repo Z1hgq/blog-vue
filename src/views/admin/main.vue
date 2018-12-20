@@ -51,7 +51,7 @@ export default {
 </script>
 <style lang="less">
 a{
-    color: #515a6e;
+    color: #515a6e !important;
 }
 </style>
 
