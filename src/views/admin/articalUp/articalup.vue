@@ -1,5 +1,7 @@
 <template>
-    <div>articalup</div>
+    <div class="articalinfo">
+        <router-view></router-view>
+    </div>
 </template>
 <script>
 export default {
@@ -11,7 +13,13 @@ export default {
     },
     props: ['meta'],
     methods:{
-       
     }
 }
 </script>
+<style lang="less">
+.articalinfo{
+    width: 800px;
+    padding-left: 10px;
+}
+</style>
+

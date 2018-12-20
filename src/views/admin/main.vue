@@ -1,5 +1,5 @@
 <template>
-    <div style="display:flex">
+    <div style="display:flex;width: 1200px;margin-left: 50%;transform: translate(-50%);">
         <Menu :active-name="$route.meta.activename" :open-names="$route.meta.openname">
         <Submenu name="1">
             <template slot="title">

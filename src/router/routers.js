@@ -43,8 +43,19 @@ export default [{
                     activename: '1-1',
                     openname: ['1']
                 },
+                redirect: '/admin/articalup/richediter',
                 component: () =>
-                    import ('@/views/admin/articalUp/articalup.vue')
+                    import ('@/views/admin/articalUp/articalup.vue'),
+                children: [{
+                    path: '/admin/articalup/richediter',
+                    name: 'richediter',
+                    meta: {
+                        activename: '1-1',
+                        openname: ['1']
+                    },
+                    component: () =>
+                        import ('@/views/admin/articalUp/richEditer/editer.vue'),
+                }]
             },
             {
                 path: '/admin/articaladmin',
