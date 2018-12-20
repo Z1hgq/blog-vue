@@ -17,13 +17,13 @@ export default {
      * @description api请求基础路径
      */
     baseUrl: {
-        dev: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/',
-        pro: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/'
+        dev: 'http://127.0.0.1:3000',
+        pro: 'http://api.cnarthub.com'
     },
     /**
      * @description 默认打开的首页的路由name值，默认为home
      */
-    homeName: 'Blog',
+    homeName: 'admin',
     /**
      * @description 需要加载的插件
      */
