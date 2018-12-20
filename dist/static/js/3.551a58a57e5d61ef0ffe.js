@@ -1,0 +1,2 @@
+webpackJsonp([3],{LWjT:function(e,r,t){"use strict";Object.defineProperty(r,"__esModule",{value:!0});var n=t("jAYZ"),s=t.n(n),c={name:"error_404",components:{errorContent:t("zIeJ").a},data:function(){return{src:s.a}}},o={render:function(){var e=this.$createElement;return(this._self._c||e)("error-content",{attrs:{code:"404",desc:"Oh~~您的页面好像飞走了~",src:this.src}})},staticRenderFns:[]},a=t("VU/8")(c,o,!1,null,null,null);r.default=a.exports},jAYZ:function(e,r,t){e.exports=t.p+"static/img/error-404.94756dc.svg"}});
+//# sourceMappingURL=3.551a58a57e5d61ef0ffe.js.map
