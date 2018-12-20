@@ -32,19 +32,19 @@ export default {
           {
               icon:'/static/img/z1hgq.png',
               name:'关于',
-              link:'/about',
+              link:'/dist/about',
               active:false
           },
           {
               icon:'/static/img/z1hgq.png',
               name:'摄影',
-              link:'/photo',
+              link:'/dist/photo',
               active:false
           },
           {
               icon:'/static/img/z1hgq.png',
               name:'博客',
-              link:'/blog',
+              link:'/dist/blog',
               active:true
           },
       ],

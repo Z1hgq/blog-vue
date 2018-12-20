@@ -1,8 +1,9 @@
 # blog-vue
 
->前端：vue vue-router iview
->后端：nodejs mongodb 
->登录验证：jwt
+- 前端：vue less vue-router iview
+- 后端：nodejs express mongodb 
+- 登录验证：jwt
+- 服务器：nginx
 
 ## Build Setup
 
