@@ -157,7 +157,7 @@ export default {
       formData.append("logo", this.$refs.upload.files[0]);
       axios({
         method: "post",
-        url: "http://localhost:3000/upload_img",
+        url: "http://api.cnarthub/upload_img",
         anync: true,
         contentType: false,
         processData: false,
@@ -176,7 +176,7 @@ export default {
       this.loading2 = true;
       axios({
         method: "post",
-        url: "http://localhost:3000/addBlogCla",
+        url: "http://api.cnarthub/addBlogCla",
         anync: true,
         contentType: false,
         processData: false,
