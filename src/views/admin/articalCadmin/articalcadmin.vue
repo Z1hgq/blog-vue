@@ -168,7 +168,13 @@ export default {
     addBlogCla() {
       var that = this
       this.loading2 = true;
-      uploadCls(that.clsname,that.imgUrl,Date.now(),Date.now()).then((res) => {
+      var data = {
+            name: that.clsname,
+            avatar: that.imgUrl,
+            createTime: Date.now(),
+            updateTime: Date.now(),
+      }
+      uploadCls(data).then((res) => {
         console.log(res.data);
         that.loading2 = false;
         if (res.data.success == '1') {
