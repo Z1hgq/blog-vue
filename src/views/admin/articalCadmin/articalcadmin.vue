@@ -62,6 +62,7 @@
 
 <script>
 import { uploadImg } from "@/api/data";
+import { uploadCls } from "@/api/admin"
 var axios = require("axios");
 export default {
   data() {
