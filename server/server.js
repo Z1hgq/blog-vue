@@ -40,6 +40,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/blog', { useNewUrlParser: true })
+let db = mongoose.connection;
 const BlogCls = mongoose.model('BlogCls', new mongoose.Schema({
     name: String,
     avatar: String,
@@ -58,7 +59,8 @@ app.use(bodyParser.json())
 app.post('/upload_img', upload.single('logo'), function(req, res, next) {
     var file = req.file;
     var path = file.path;
-    path = path.replace('..', '')
+    path = path.replace('../dist', '')
+    path = 'http://www.cnarthub.com' + path;
     if (file) {
         res.send({ success: true, filePath: path });
     } else {
@@ -90,30 +92,41 @@ app.post('/addBlogCla', (req, res) => {
     if (!req.body) {
         return res.sendStatus(400)
     } else {
-        var whereStr = { "name": req.body.name }; // 查询条件
-        if (BlogCls.find(whereStr).pretty()) {
-            res.send({
-                success: fasle,
-                message: '请勿添加已有的分类'
-            })
-        } else {
-            BlogCls.insertMany(req.body, (errr, ress) => {
-                if (errr) {
-                    res.send({
-                        success: fasle,
-                        message: '添加失败'
-                    })
-                } else {
-                    res.send({
-                        success: true,
-                        message: '添加成功'
-                    })
-                    console.log("分类添加成功");
-                }
-            })
-        }
-
+        var whereStr = { name: req.body.name }; // 查询条件
+        var flag = true
+        BlogCls.find(whereStr, (err, ress) => {
+            console.log(ress)
+            if (ress != []) {
+                flag = false
+            }
+            console.log(flag)
+        }).then(() => {
+            if (!flag) {
+                res.send({
+                    success: '0',
+                    message: '请勿添加已有的分类'
+                })
+            } else {
+                BlogCls.insertMany(req.body, (errr, resss) => {
+                    if (errr) {
+                        res.send({
+                            success: '0',
+                            message: '添加失败'
+                        })
+                    } else {
+                        res.send({
+                            success: '1',
+                            message: '添加成功'
+                        })
+                        console.log("分类添加成功");
+                    }
+                })
+            }
+        })
     }
+})
+app.get('/test', (req, res) => {
+
 })
 
 app.listen(3000, () => {

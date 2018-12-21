@@ -6,6 +6,7 @@
                 <input type="submit" value="提交" @click="hadelImgupload">
       </form>-->
       <input class="imgUp" type="file" ref="upload" name="logo" id="file" accept="image/*" @change="getImg"/>
+      <img v-if="imgUrl" :src="imgUrl" alt="" style="width:30px;margin-top:30px">
       <Poptip trigger="focus">
         <Input v-model="clsname" prefix placeholder="分类名称" style="width: 150px"/>
         <div slot="content">{{clsname}}</div>
@@ -188,7 +189,7 @@ export default {
       }).then(function(res) {
         console.log(res.data);
         that.loading2 = false;
-        if (res.data.success) {
+        if (res.data.success == '1') {
           that.$Message.success(res.data.message);
         } else {
           that.$Message.success(res.data.message);
