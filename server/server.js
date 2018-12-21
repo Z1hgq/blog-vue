@@ -11,16 +11,15 @@ const users = require('./user.json')
 const user = users[0]
 app.set('jwtTokenSecret', user.pw);
 
+
+
 var uploadFolder = '../dist/upload/';
-
-
 mkdirp(uploadFolder, function(err) {
 
-    // path exists unless there was an error
+        // path exists unless there was an error
 
-})
-
-// 通过 filename 属性定制
+    })
+    // 通过 filename 属性定制
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, uploadFolder); // 保存的路径，备注：需要自己创建
@@ -31,30 +30,27 @@ var storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now() + "." + fileFormat[fileFormat.length - 1]);
     }
 });
-
 // 通过 storage 选项来对 上传行为 进行定制化
 var upload = multer({ storage: storage })
-
-// 创建 application/json 解析
+    // 创建 application/json 解析
 var jsonParser = bodyParser.json()
     // 创建 application/x-www-form-urlencoded 解析
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-// var jwt = require('jwt-simple');
-// //设置密钥
-// app.set('jwtTokenSecret', 'YOUR_SCRET_STRING');
 
 const mongoose = require('mongoose')
-
-mongoose.connect('mongodb://127.0.0.1:27017/test', { useNewUrlParser: true })
-
-const Product = mongoose.model('Product', new mongoose.Schema({
-    title: String,
+mongoose.connect('mongodb://127.0.0.1:27017/blog', { useNewUrlParser: true })
+const BlogCls = mongoose.model('BlogCls', new mongoose.Schema({
+    name: String,
+    avatar: String,
+    createTime: String,
+    updateTime: String,
 }))
 
-
 app.use(express.static('public'))
+    //解决跨域问题
 app.use(require('cors')())
+    //获取上传参数内容
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -89,6 +85,35 @@ app.post('/login', urlencodedParser, (req, res) => {
         })
     }
     console.log(req.body)
+})
+app.post('/addBlogCla', (req, res) => {
+    if (!req.body) {
+        return res.sendStatus(400)
+    } else {
+        var whereStr = { "name": req.body.name }; // 查询条件
+        if (BlogCls.find(whereStr).pretty()) {
+            res.send({
+                success: fasle,
+                message: '请勿添加已有的分类'
+            })
+        } else {
+            BlogCls.insertMany(req.body, (errr, ress) => {
+                if (errr) {
+                    res.send({
+                        success: fasle,
+                        message: '添加失败'
+                    })
+                } else {
+                    res.send({
+                        success: true,
+                        message: '添加成功'
+                    })
+                    console.log("分类添加成功");
+                }
+            })
+        }
+
+    }
 })
 
 app.listen(3000, () => {
