@@ -126,7 +126,15 @@ app.post('/addBlogCla', (req, res) => {
     }
 })
 app.get('/test', (req, res) => {
-    res.send({ 'test': '1' })
+    if (!req.body) {
+        return res.sendStatus(400)
+    } else {
+        console.log(req.body)
+        var whereStr = { name: req.body.name }; // 查询条件
+        BlogCls.find(whereStr, (err, ress) => {
+            res.send(ress)
+        })
+    }
 })
 
 app.listen(3000, () => {

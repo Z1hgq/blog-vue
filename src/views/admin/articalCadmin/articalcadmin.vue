@@ -155,38 +155,19 @@ export default {
       var that = this;
       var formData = new FormData();
       formData.append("logo", this.$refs.upload.files[0]);
-      axios({
-        method: "post",
-        url: "http://api.cnarthub/upload_img",
-        anync: true,
-        contentType: false,
-        processData: false,
-        data: formData
-      }).then(function(res) {
+      uploadImg(formData).then((res)=>{
         console.log(res.data);
         if (res.data.success) {
           that.imgUrl = res.data.filePath;
           that.$Message.success("Upload success~");
         } else {
         }
-      });
+      })
     },
     addBlogCla() {
       var that = this
       this.loading2 = true;
-      axios({
-        method: "post",
-        url: "http://api.cnarthub/addBlogCla",
-        anync: true,
-        contentType: false,
-        processData: false,
-        data: {
-            name: that.clsname,
-            avatar: that.imgUrl,
-            createTime: Date.now(),
-            updateTime: Date.now(),
-        }
-      }).then(function(res) {
+      uploadCls(that.clsname,that.imgUrl,Date.now(),Date.now()).then((res) => {
         console.log(res.data);
         that.loading2 = false;
         if (res.data.success == '1') {
@@ -194,7 +175,28 @@ export default {
         } else {
           that.$Message.success(res.data.message);
         }
-      });
+      })
+      // axios({
+      //   method: "post",
+      //   url: "/addBlogCla",
+      //   anync: true,
+      //   contentType: false,
+      //   processData: false,
+      //   data: {
+      //       name: that.clsname,
+      //       avatar: that.imgUrl,
+      //       createTime: Date.now(),
+      //       updateTime: Date.now(),
+      //   }
+      // }).then(function(res) {
+      //   console.log(res.data);
+      //   that.loading2 = false;
+      //   if (res.data.success == '1') {
+      //     that.$Message.success(res.data.message);
+      //   } else {
+      //     that.$Message.success(res.data.message);
+      //   }
+      // });
     },
     show(index) {
       this.$Modal.info({
