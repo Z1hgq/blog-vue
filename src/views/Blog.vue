@@ -1,7 +1,7 @@
 <template>
     <div class="blog">
         <div class="classification">
-            <div class="classification_el">
+            <!-- <div class="classification_el">
                 <div class="cla_img">
                     <img src="/static/img/classification.png" alt="">
                 </div>
@@ -16,9 +16,10 @@
                 <div class="cla_name">
                     <p>{{cla.name}}</p>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="content">
+            <h1>数据api开发中～</h1>
             <div class="content_el">
                 
             </div>
