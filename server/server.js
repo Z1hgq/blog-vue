@@ -126,7 +126,7 @@ app.post('/addBlogCla', (req, res) => {
     }
 })
 app.get('/test', (req, res) => {
-
+    res.send({ 'test': '1' })
 })
 
 app.listen(3000, () => {
