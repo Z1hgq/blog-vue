@@ -1,7 +1,6 @@
 <template>
     <div class="blog">
-        <div class="classification">
-            
+        <div class="classification" :style="getScreenHeight">
             <div class="classification_el">
                 <div class="cla_img">
                     <img src="/static/img/classification.png" alt="">
@@ -20,8 +19,8 @@
             </div>
             
         </div>
-        <div class="content">
-            <Scroll>
+        <div class="content" :style="getScreenHeight">
+            <Scroll :height='windowHeight'>
             <h1>数据api开发中～</h1>
             <h3>前台导航</h3>
             <h3>前台路由</h3>
@@ -31,52 +30,98 @@
             <h3>登录模块api及token验证</h3> 
             <h3>图片上传api</h3>
             <h3>文章分类上传api</h3>
-            <div class="content_el">               
+            <div class="content_el" v-for="item in Articals" :key="item.id">    
+                <a href=""><h2>{{item.title}}</h2></a> 
+                <p>{{item.description}}</p>
+                <div class="artTag"><Tag v-for="el in item.tag" :key="el.id" color='warning'>{{el}}</Tag></div>
+                <div class="artInfo">
+                    <Tag color="cyan">{{item.classification}}</Tag><span>{{item.createTime}}</span>
+                </div>
             </div>
             </Scroll>
         </div>
-        <div class="info">
+        <div class="info" :style="getScreenHeight">
 
         </div>
     </div>
 </template>
 <script>
 import { getCls} from "@/api/admin"
+import { getArtical } from "@/api/blog"
+const sd = require('silly-datetime')
 export default {
     name:'Blog',
     data(){
         return{
+            getScreenHeight:'height:' +(document.body.clientHeight - 30) + 'px',
+            windowHeight:document.body.clientHeight,
             classes:[
                 {
                     imgUrl:'/static/img/classification.png',
                     name:'分类测试'
                 },
             ],
-            blogs:[
+            Articals:[
                 {
-                    title:'',
-                    time:'',
-                    keywords:[],
-                    tags:[],
-                    description:'',
-                }
+                    title:'标题title test题title test题title test题title test题title test题title test题title test ',
+                    tag:['标签','dasfa','ffasf'],
+                    description:'描述descriptiondescriptiondescriptiondescriptiondescription',
+                    content:'content content content content content content content content content content content content ',
+                    createTime:'213123',
+                    updateTime:'423423414',
+                    classification:'Python',
+                },
+                {
+                    title:'title test ',
+                    tag:'bisadhj;dasfa;ffasf;',
+                    description:'descri题title test题title test题title test题title test题title test题title test题title test题title test题title testdescriptiondescriptiondescription',
+                    content:'content content content content content content content content content content content content ',
+                    createTime:'213123',
+                    updateTime:'423423414',
+                    classification:'分类',
+                },
+          
             ]
         }
     },
+    methods:{
+        // getScreenHeight(){
+        //     return 'height:' + this.windowHeight +'px'
+        // }
+    },
     mounted() {
-    getCls().then((res)=>{
-      console.log(res)
-      this.classes= [];
-      let datas = res.data.data
-      for(let ele in res.data.data){
-        let obj = {
-          name:datas[ele].name,
-          imgUrl:datas[ele].avatar,
-          id:datas[ele]._id,
+        
+        this.windowHeight = document.body.clientHeight - 30;
+        getCls().then((res)=>{
+        this.classes= [];
+        let datas = res.data.data
+        for(let ele in res.data.data){
+            let obj = {
+            name:datas[ele].name,
+            imgUrl:datas[ele].avatar,
+            id:datas[ele]._id,
+            }
+            this.classes.push(obj)
         }
-        this.classes.push(obj)
-      }
-    })
+        })
+        getArtical({}).then((res) => {
+            console.log(res)
+            let datas = res.data.data
+            for(let ele in res.data.data){
+                let obj = {
+                    title:datas[ele].title,
+                    tag:datas[ele].tag.split(';'),
+                    description:datas[ele].description,
+                    content:datas[ele].content,
+                    createTime:datas[ele].createTime,
+                    updateTime:datas[ele].updateTime,
+                    classification:datas[ele].classification,
+                }
+                this.Articals.push(obj)
+            }
+        })
+        
+
   },
   created(){
     //   var element = document.getElementById("tapblog");
@@ -148,6 +193,33 @@ p,div{
         min-height: 640px;
         float: left;
         padding: 15px;
+        .content_el{
+            width: 100%;
+            height:150px;
+            background: #FFFFEE;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            a{
+                h2{
+                    overflow:hidden;
+                    text-overflow:ellipsis;
+                    white-space:nowrap;
+                }
+            }
+            p{
+                font-size: 16px;
+                overflow:hidden;
+                text-overflow:ellipsis;
+                white-space:nowrap;
+            }
+            .artTag{
+                padding: 5px 0;
+            }
+            .artInfo{
+                padding: 5px 0;
+            }
+        }
     }
     .info{
         width: 196px;

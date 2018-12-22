@@ -76,8 +76,9 @@
 </style>
 
 <script>
-import { uploadImg } from "@/api/data";
+import { uploadImg } from "@/api/data"
 import { uploadCls, getCls} from "@/api/admin"
+const sd = require('silly-datetime')
 var axios = require("axios");
 export default {
   data() {
@@ -193,8 +194,8 @@ export default {
         var data = {
               name: that.clsname,
               avatar: that.imgUrl,
-              createTime: Date.now(),
-              updateTime: Date.now(),
+              createTime: sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
+              updateTime: sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
         }
         uploadCls(data).then((res) => {
           console.log(res.data);

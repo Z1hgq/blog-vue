@@ -45,8 +45,9 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import hljs from "highlight.js";
-import { quillEditor } from "vue-quill-editor";
+import { quillEditor } from "vue-quill-editor"
 import { getCls,articalUp } from '@/api/admin'
+const sd = require('silly-datetime')
 export default {
   name: "richediter",
   components: {
@@ -104,8 +105,8 @@ export default {
       this.artical.title = this.title
       this.artical.tag = this.tag
       this.artical.description = this.description
-      this.artical.createTime = Date.now()
-      this.artical.updateTime = Date.now()
+      this.artical.createTime = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+      this.artical.updateTime = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
       if(this.artical.content == ''){
         that.$Notice.error({
             title:'请填写正文！',
