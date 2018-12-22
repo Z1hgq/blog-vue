@@ -93,15 +93,9 @@ app.post('/addBlogCla', (req, res) => {
         return res.sendStatus(400)
     } else {
         var whereStr = { name: req.body.name }; // 查询条件
-        var flag = true
         BlogCls.find(whereStr, (err, ress) => {
-            console.log(ress)
-            if (ress != []) {
-                flag = false
-            }
-            console.log(flag)
-        }).then(() => {
-            if (!flag) {
+            console.log(ress.length)
+            if (ress.length !== 0) {
                 res.send({
                     success: '0',
                     message: '请勿添加已有的分类'
