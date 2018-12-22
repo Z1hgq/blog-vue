@@ -5,8 +5,11 @@
                 <input accept="image/*" id="upload_file" type="file" name="logo">
                 <input type="submit" value="提交" @click="hadelImgupload">
       </form>-->
-      <input class="imgUp" type="file" ref="upload" name="logo" id="file" accept="image/*" @change="getImg"/>
-      <img v-if="imgUrl" :src="imgUrl" alt="" style="width:30px;margin-top:30px">
+      <div class="imgUpDiv">
+        <input class="imgUp" type="file" ref="upload" name="logo" id="file" accept="image/*" @change="getImg"/>
+        <label for="file"><Icon type="ios-albums-outline" />&nbsp点击上传图标</label>
+      </div>
+      <img v-if="imgUrl" :src="imgUrl" alt="">
       <Poptip trigger="focus">
         <Input v-model="clsname" prefix placeholder="分类名称" style="width: 150px"/>
         <div slot="content">{{clsname}}</div>
@@ -28,14 +31,20 @@
 <style lang="less">
 .imgUp{
     height: 30px;
+    opacity: 0;
+    width: 1px;
+}
+.imgUpDiv{
     background-color: #2d8cf0;
     color: aliceblue;
     border-radius: 13px;
     margin-top: 26px;
-    padding: 4px;
-    padding-left: 15px;
+    height: 30px;
+    padding-left: 7px;
+    padding-top: 4px;
     margin-right: 20px;
     margin-left: 10px;
+    width: 110px;
 }
 .ivu-table-wrapper {
   position: relative;
@@ -49,6 +58,12 @@
   display: flex;
   height: 90px;
   border: 2px solid #2d8cf0;
+  img{
+    width: 30px;
+    margin-top: 27px;
+    height: 30px;
+    margin-right: 20px;
+  }
 }
 .demo-upload-list > img {
   width: 60px;
