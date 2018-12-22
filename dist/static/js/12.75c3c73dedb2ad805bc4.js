@@ -1,0 +1,2 @@
+webpackJsonp([12],{Fdif:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var a={render:function(){var e=this.$createElement;return(this._self._c||e)("div",[this._v("articaladmin")])},staticRenderFns:[]},r=n("VU/8")({name:"articaladmin",data:function(){return{}},props:["meta"],methods:{}},a,!1,null,null,null);t.default=r.exports}});
+//# sourceMappingURL=12.75c3c73dedb2ad805bc4.js.map
