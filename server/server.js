@@ -59,12 +59,9 @@ app.use(bodyParser.json())
 app.post('/upload_img', upload.single('logo'), function(req, res, next) {
     var file = req.file;
     var path = file.path;
-    if (req.ip.indexOf('127.0.0.1')) {
-        path = path.replace('..', '')
-    } else {
-        path = path.replace('../dist', '')
-        path = 'http://www.cnarthub.com' + path;
-    }
+
+    path = path.replace('../dist', '')
+    path = 'http://www.cnarthub.com' + path;
     if (file) {
         res.send({ success: true, filePath: path });
     } else {
