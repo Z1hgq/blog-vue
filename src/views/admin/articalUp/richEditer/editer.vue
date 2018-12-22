@@ -1,7 +1,7 @@
 <template>
   <div class="articalinfo">
     <div class="infoIn">
-      <Tag checkable color="primary">标题</Tag><Input v-model="title" placeholder="请输入标题..." style="width: 300px"/>
+      <Tag checkable color="primary">标题</Tag><Input v-model="artTitle" placeholder="请输入标题..." style="width: 300px"/>
       <br>
       <br>
       <Tag checkable color="primary">描述</Tag><Input type="textarea" :autosize="{minRows: 2,maxRows: 5}"  v-model="description" placeholder="请输入文章描述..." style="width: 300px" />
@@ -58,18 +58,10 @@ export default {
       loading:false,
       model:'',
       classes:[],
-      title:'',
+      artTitle:'',
+      classification:'',
       tag:'',
       description:'',
-      artical:{
-        title:'',
-        tag:'',
-        description:'',
-        content:'',
-        createTime:'',
-        updateTime:'',
-        classification:'',
-      },
       name: "01-example",
       content: "",
       editorOption: {
@@ -101,29 +93,34 @@ export default {
   methods: {
     addArtical(){
       var that = this
-      this.artical.content = this.content
-      this.artical.title = this.title
-      this.artical.tag = this.tag
-      this.artical.description = this.description
-      this.artical.createTime = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
-      this.artical.updateTime = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
-      if(this.artical.content == ''){
+      console.log(that)
+      var artical = {
+        title:that.artTitle,
+        tag:that.tag,
+        description:that.description,
+        content:that.content,
+        createTime:sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
+        updateTime:sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
+        classification:that.classification,
+      }
+      if(artical.content == ''){
         that.$Notice.error({
             title:'请填写正文！',
             desc:''
         })
-      }else if(this.artical.title = ''){
+      }else if(artical.title == ''){
         that.$Notice.error({
             title:'请填写标题！',
             desc:''
         })
-      }else if(this.artical.classification = ''){
+      }else if(artical.classification == ''){
         that.$Notice.error({
             title:'请选择分类！',
             desc:''
         })
       }else{
-        articalUp(this.artical).then((res) =>{
+        console.log(artical)
+        articalUp(artical).then((res) =>{
           console.log(res)
           if(res.data.success == '1'){
             that.$Notice.success({
@@ -145,10 +142,10 @@ export default {
     },
     getSelect(e){
       console.log(e)
-      this.artical.classification = e;
+      console.log(this)
+      this.classification = e;
     },
     onEditorBlur(editor) {
-      this.artical.content = this.content;
       console.log(this.content);
     },
     onEditorFocus(editor) {},
