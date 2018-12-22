@@ -47,6 +47,15 @@ const BlogCls = mongoose.model('BlogCls', new mongoose.Schema({
     createTime: String,
     updateTime: String,
 }))
+const Artical = mongoose.model('Artical', new mongoose.Schema({
+    title: String,
+    tag: String,
+    description: String,
+    content: String,
+    createTime: String,
+    updateTime: String,
+    classification: String,
+}))
 
 app.use(express.static('public'))
     //解决跨域问题
@@ -124,10 +133,9 @@ app.get('/test', (req, res) => {
     if (!req.body) {
         return res.sendStatus(400)
     } else {
-        if (req.ip.indexOf('127.0.0.1'))
-            console.log(req.ip)
-        else
-            console.log('not match')
+        Artical.find({}, (err, ress) => {
+            res.send(ress)
+        })
     }
 })
 app.get('/getCls', (req, res) => {
@@ -146,6 +154,26 @@ app.get('/getCls', (req, res) => {
                     message: '分类信息获取成功',
                     data: ress,
                 })
+            }
+        })
+    }
+})
+app.post('/articalUp', (req, res) => {
+    if (!req.body) {
+        return res.sendStatus(400)
+    } else {
+        Artical.insertMany(req.body, (errr, resss) => {
+            if (errr) {
+                res.send({
+                    success: '0',
+                    message: '上传失败'
+                })
+            } else {
+                res.send({
+                    success: '1',
+                    message: '上传成功'
+                })
+                console.log("文章上传成功");
             }
         })
     }

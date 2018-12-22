@@ -20,3 +20,20 @@ export const getCls = () => {
         method: 'get'
     })
 }
+
+export const articalUp = ({ title, tag, description, content, createTime, updateTime, classification }) => {
+    const data = {
+        title,
+        tag,
+        description,
+        content,
+        createTime,
+        updateTime,
+        classification
+    }
+    return axios.request({
+        url: 'articalUp',
+        data,
+        method: 'post'
+    })
+}

@@ -184,10 +184,10 @@ export default {
       var that = this
       this.loading2 = true;
       if(that.clsname == ''){
-        that.$Message.success('请输入分类名称！');
+        that.$Message.error('请输入分类名称！');
         that.loading2 = false;
       }else if(that.imgUrl == ''){
-        that.$Message.success('请选择分类图标！');
+        that.$Message.error('请选择分类图标！');
         that.loading2 = false;
       }else{
         var data = {
@@ -216,7 +216,7 @@ export default {
               }
             })
           } else {
-            that.$Message.success(res.data.message);
+            that.$Message.warning(res.data.message);
           }
         })
       }
