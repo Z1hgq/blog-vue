@@ -9,18 +9,27 @@ export default [{
         children: [{
                 path: '/blog',
                 name: 'Blog',
+                meta: {
+                    active: 'tapblog'
+                },
                 component: () =>
                     import ('@/views/Blog.vue')
             },
             {
                 path: '/about',
                 name: 'About',
+                meta: {
+                    active: 'tapabout'
+                },
                 component: () =>
                     import ('@/views/About.vue')
             },
             {
                 path: '/photo',
                 name: 'Photo',
+                meta: {
+                    active: 'tapphoto'
+                },
                 component: () =>
                     import ('@/views/Photo.vue')
             },

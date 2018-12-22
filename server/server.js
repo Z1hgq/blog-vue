@@ -59,8 +59,12 @@ app.use(bodyParser.json())
 app.post('/upload_img', upload.single('logo'), function(req, res, next) {
     var file = req.file;
     var path = file.path;
-    path = path.replace('../dist', '')
-    path = 'http://www.cnarthub.com' + path;
+    if (req.ip.indexOf('127.0.0.1')) {
+        path = path.replace('..', '')
+    } else {
+        path = path.replace('../dist', '')
+        path = 'http://www.cnarthub.com' + path;
+    }
     if (file) {
         res.send({ success: true, filePath: path });
     } else {
@@ -123,10 +127,29 @@ app.get('/test', (req, res) => {
     if (!req.body) {
         return res.sendStatus(400)
     } else {
-        console.log(req.body)
-        var whereStr = { name: req.body.name }; // 查询条件
-        BlogCls.find(whereStr, (err, ress) => {
-            res.send(ress)
+        if (req.ip.indexOf('127.0.0.1'))
+            console.log(req.ip)
+        else
+            console.log('not match')
+    }
+})
+app.get('/getCls', (req, res) => {
+    if (!req.body) {
+        return res.sendStatus(400)
+    } else {
+        BlogCls.find({}, (err, ress) => {
+            if (err) {
+                res.send({
+                    success: '0',
+                    message: '分类信息获取失败'
+                })
+            } else {
+                res.send({
+                    success: '1',
+                    message: '分类信息获取成功',
+                    data: ress,
+                })
+            }
         })
     }
 })

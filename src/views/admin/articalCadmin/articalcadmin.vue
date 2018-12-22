@@ -77,7 +77,7 @@
 
 <script>
 import { uploadImg } from "@/api/data";
-import { uploadCls } from "@/api/admin"
+import { uploadCls, getCls} from "@/api/admin"
 var axios = require("axios");
 export default {
   data() {
@@ -183,42 +183,43 @@ export default {
     addBlogCla() {
       var that = this
       this.loading2 = true;
-      var data = {
-            name: that.clsname,
-            avatar: that.imgUrl,
-            createTime: Date.now(),
-            updateTime: Date.now(),
-      }
-      uploadCls(data).then((res) => {
-        console.log(res.data);
+      if(that.clsname == ''){
+        that.$Message.success('请输入分类名称！');
         that.loading2 = false;
-        if (res.data.success == '1') {
-          that.$Message.success(res.data.message);
-        } else {
-          that.$Message.success(res.data.message);
+      }else if(that.imgUrl == ''){
+        that.$Message.success('请选择分类图标！');
+        that.loading2 = false;
+      }else{
+        var data = {
+              name: that.clsname,
+              avatar: that.imgUrl,
+              createTime: Date.now(),
+              updateTime: Date.now(),
         }
-      })
-      // axios({
-      //   method: "post",
-      //   url: "/addBlogCla",
-      //   anync: true,
-      //   contentType: false,
-      //   processData: false,
-      //   data: {
-      //       name: that.clsname,
-      //       avatar: that.imgUrl,
-      //       createTime: Date.now(),
-      //       updateTime: Date.now(),
-      //   }
-      // }).then(function(res) {
-      //   console.log(res.data);
-      //   that.loading2 = false;
-      //   if (res.data.success == '1') {
-      //     that.$Message.success(res.data.message);
-      //   } else {
-      //     that.$Message.success(res.data.message);
-      //   }
-      // });
+        uploadCls(data).then((res) => {
+          console.log(res.data);
+          that.loading2 = false;
+          if (res.data.success == '1') {
+            that.$Message.success(res.data.message);
+            getCls().then((res)=>{
+              console.log(res)
+              this.clsdata = [];
+              let datas = res.data.data
+              for(let ele in res.data.data){
+                let obj = {
+                  name:datas[ele].name,
+                  id:datas[ele]._id,
+                  icon:datas[ele].avatar,
+                  time:datas[ele].createTime
+                }
+                this.clsdata.push(obj)
+              }
+            })
+          } else {
+            that.$Message.success(res.data.message);
+          }
+        })
+      }
     },
     show(index) {
       this.$Modal.info({
@@ -234,6 +235,21 @@ export default {
       this.clsdata.splice(index, 1);
     }
   },
-  mounted() {}
+  mounted() {
+    getCls().then((res)=>{
+      console.log(res)
+      this.clsdata = [];
+      let datas = res.data.data
+      for(let ele in res.data.data){
+        let obj = {
+          name:datas[ele].name,
+          id:datas[ele]._id,
+          icon:datas[ele].avatar,
+          time:datas[ele].createTime
+        }
+        this.clsdata.push(obj)
+      }
+    })
+  }
 };
 </script>

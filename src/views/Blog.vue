@@ -1,7 +1,8 @@
 <template>
     <div class="blog">
         <div class="classification">
-            <!-- <div class="classification_el">
+            
+            <div class="classification_el">
                 <div class="cla_img">
                     <img src="/static/img/classification.png" alt="">
                 </div>
@@ -16,9 +17,11 @@
                 <div class="cla_name">
                     <p>{{cla.name}}</p>
                 </div>
-            </div> -->
+            </div>
+            
         </div>
         <div class="content">
+            <Scroll>
             <h1>数据api开发中～</h1>
             <h3>前台导航</h3>
             <h3>前台路由</h3>
@@ -28,9 +31,9 @@
             <h3>登录模块api及token验证</h3> 
             <h3>图片上传api</h3>
             <h3>文章分类上传api</h3>
-            <div class="content_el">
-                
+            <div class="content_el">               
             </div>
+            </Scroll>
         </div>
         <div class="info">
 
@@ -38,31 +41,12 @@
     </div>
 </template>
 <script>
+import { getCls} from "@/api/admin"
 export default {
     name:'Blog',
     data(){
         return{
             classes:[
-                {
-                    imgUrl:'/static/img/classification.png',
-                    name:'分类测试'
-                },
-                {
-                    imgUrl:'/static/img/classification.png',
-                    name:'分类测试'
-                },
-                {
-                    imgUrl:'/static/img/classification.png',
-                    name:'分类测试'
-                },
-                {
-                    imgUrl:'/static/img/classification.png',
-                    name:'分类测试'
-                },
-                {
-                    imgUrl:'/static/img/classification.png',
-                    name:'分类测试'
-                },
                 {
                     imgUrl:'/static/img/classification.png',
                     name:'分类测试'
@@ -78,7 +62,26 @@ export default {
                 }
             ]
         }
-    }
+    },
+    mounted() {
+    getCls().then((res)=>{
+      console.log(res)
+      this.classes= [];
+      let datas = res.data.data
+      for(let ele in res.data.data){
+        let obj = {
+          name:datas[ele].name,
+          imgUrl:datas[ele].avatar,
+          id:datas[ele]._id,
+        }
+        this.classes.push(obj)
+      }
+    })
+  },
+  created(){
+    //   var element = document.getElementById("tapblog");
+    //   console.log(element)
+  }
 }
 </script>
 <style lang="less">
@@ -96,21 +99,23 @@ p,div{
     left: 50%;
     transform: translate(-50%,0%);
     .classification{
+        padding: 5px;
         width:160px;
         height: auto;
         float: left;
         .classification_el{
             width: 164px;
             height: 50px;
-            box-shadow: 1px 0 0px #FF6600;
+            box-shadow: 1px 0 0px #2d8cf0;
             display: flex;
             &:hover{
-                border-right: 4px solid #FF6600;
+                border-right: 4px solid #2d8cf0;
+                background: #f0faff;
                 // border-top: 1px solid #FF6600;
                 // border-bottom: 1px solid #FF6600;
                 // border-bottom: 1px solid #FF6600;
                 p{
-                    color:#FF6600;
+                    color:#2d8cf0;
                 }
             }
             .cla_img{
@@ -131,7 +136,7 @@ p,div{
                 width: 110px;
                 height: 50px;
                 // float: left;
-                color: #009966;
+                color: #515a6e;
                 // margin-top: -5px;
                 padding-top: 15px;
             }
@@ -142,6 +147,7 @@ p,div{
         height: auto;
         min-height: 640px;
         float: left;
+        padding: 15px;
     }
     .info{
         width: 196px;

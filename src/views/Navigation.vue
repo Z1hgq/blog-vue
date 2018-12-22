@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="nav">
+    <div class="nav">
     <div class="icon">
       <a href="/"  rel="noopener noreferrer">
         <div>
@@ -12,9 +12,9 @@
       </a>
     </div>
     <div class="tap">
-        <div class="el" v-for="tap in taps" :key="tap.id">
-            <img :src="tap.icon" alt="">
-            <div><a :href="tap.link">{{tap.name}}</a></div>
+        <div class="el" v-for="tap in taps" :key="tap.id" :id="tap.id">
+            <!-- <img :src="tap.icon" alt=""> -->
+            <div><Icon :type="tap.icon" class="tapicon"/><a :href="tap.link">{{tap.name}}</a></div>
         </div>
     </div>
   </div>
@@ -30,25 +30,32 @@ export default {
       img:'/static/img/z1hgq.png',
       taps:[
           {
-              icon:'/static/img/z1hgq.png',
+              id:'tapabout',
+              icon:'ios-contact-outline',
               name:'关于',
               link:'/dist/about',
               active:false
           },
-          {
-              icon:'/static/img/z1hgq.png',
+          { 
+              id:'tapphoto',
+              icon:'ios-camera-outline',
               name:'摄影',
               link:'/dist/photo',
               active:false
           },
           {
-              icon:'/static/img/z1hgq.png',
+              id:'tapblog',
+              icon:'ios-laptop',
               name:'博客',
               link:'/dist/blog',
               active:true
           },
       ],
     };
+  },
+  mounted(){
+      var element = document.getElementById(this.$route.meta.active);
+      element.classList.add('act')
   }
 };
 </script>
@@ -68,6 +75,7 @@ a,p{
   width: 100%;
   display: flex;
   box-shadow: 0px 4px 4px #ccc;
+  z-index: 99999;
   .icon {
     height: 100%;
     width: 15%;
@@ -82,7 +90,7 @@ a,p{
       margin-left: 10px;
     }
     span {
-      color: #009966;
+      color: #515a6e;
       font-size: 20px;
       padding-left: 10px;
       height: 20px;
@@ -107,25 +115,31 @@ a,p{
           height: 100%;
           float: right;
           &:hover{
-              border-bottom: 2px solid #FF9933;
+              border-bottom: 2px solid #2d8cf0;
               a{
-                  color:#FF9933;
+                  color:#2d8cf0;
+              }
+              .tapicon{
+                  color:#2d8cf0;
               }
           }
           a{
-              color:#009966;
+              color:#515a6e;
               padding-left: 15px;
-          }
-          img{
-              width: 20px;
-              height: 20px;
-              float: left;
-              margin-top: 20px;
           }
           div{
               width: 80px;
               padding-top: 20px;
           }
+      }
+      .act{
+          border-bottom: 2px solid #2d8cf0;
+              a{
+                  color:#2d8cf0;
+              }
+              .tapicon{
+                  color:#2d8cf0;
+              }
       }
   }
 }

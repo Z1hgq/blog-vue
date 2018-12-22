@@ -13,3 +13,10 @@ export const uploadCls = ({ name, avatar, createTime, updateTime }) => {
         method: 'post'
     })
 }
+
+export const getCls = () => {
+    return axios.request({
+        url: 'getCls',
+        method: 'get'
+    })
+}
