@@ -1,10 +1,10 @@
 import axios from '@/libs/api.request'
 
-export const getArtical = ({ name }) => {
-    const data = { name }
+export const getArtical = ({ classification }) => {
+    const data = { classification }
     return axios.request({
-        url: 'articalGet',
+        url: 'articalGet?t=' + Date.now(),
         data,
-        method: 'get'
+        method: 'post'
     })
 }

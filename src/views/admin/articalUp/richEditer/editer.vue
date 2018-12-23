@@ -127,7 +127,7 @@ export default {
               title:res.data.message,
               desc:''
             });
-            that.title = '';
+            that.artTitle = '';
             that.content = '';
             that.tag = '';
             that.description = '';

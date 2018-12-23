@@ -178,10 +178,11 @@ app.post('/articalUp', (req, res) => {
         })
     }
 })
-app.get('/articalGet', (req, res) => {
+app.post('/articalGet', (req, res) => {
     if (!req.body) {
         return res.sendStatus(400);
     } else {
+        console.log(req.body)
         Artical.find(req.body, (err, ress) => {
             if (err) {
                 res.send({

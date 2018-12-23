@@ -1,23 +1,22 @@
 <template>
     <div class="blog">
         <div class="classification" :style="getScreenHeight">
-            <div class="classification_el">
-                <div class="cla_img">
-                    <img src="/static/img/classification.png" alt="">
+            <div class="classification_el" id="all" @click.capture="changeClassification">
+                <div class="_all" style="width:50px;height:50px">
+                    <img src="/static/img/classification.png" alt="" class="_all">
                 </div>
                 <div class="cla_name">
-                    <p>全部分类</p>
+                    <p class="_all">全部分类</p>
                 </div>
             </div>
-            <div class="classification_el" v-for="cla in classes" :key="cla.id">
-                <div class="cla_img">
-                    <img :src="cla.imgUrl" alt="">
+            <div class="classification_el" v-for="cla in classes" :key="cla.id" :id="cla.name" @click.capture="changeClassification">
+                <div :class="'_'+cla.name" style="width:50px;height:50px">
+                    <img :src="cla.imgUrl" alt="" :class="'_'+cla.name">
                 </div>
                 <div class="cla_name">
-                    <p>{{cla.name}}</p>
+                    <p :class="'_'+cla.name">{{cla.name}}</p>
                 </div>
             </div>
-            
         </div>
         <div class="content" :style="getScreenHeight">
             <Scroll :height='windowHeight'>
@@ -53,8 +52,9 @@ export default {
     name:'Blog',
     data(){
         return{
-            getScreenHeight:'height:' +(document.body.clientHeight - 30) + 'px',
+            getScreenHeight:'height:' +(window.screen.height - 190) + 'px',
             windowHeight:document.body.clientHeight,
+            clsName:'',
             classes:[
                 {
                     imgUrl:'/static/img/classification.png',
@@ -88,24 +88,64 @@ export default {
         // getScreenHeight(){
         //     return 'height:' + this.windowHeight +'px'
         // }
+        changeClassification(e){
+            var id = e.target.className.replace('_','')
+            this.clsName = id
+            var ids = ['all']
+            for(let ele in this.classes){
+                ids.push(this.classes[ele].name)
+            }
+            for(let ele in ids){
+                let el = document.getElementById(ids[ele])
+                el.classList.remove('act')
+            }
+            try{
+                let actEl = document.getElementById(id)
+                actEl.classList.add('act')
+            }catch(err){
+                console.log(err)
+            }
+            let ob = {}
+            if(this.clsName == 'all'){//查询全部文章的时候传递空对象
+            }else{
+                ob = {classification:this.clsName}//查询其他文章的时候传递文章分类名
+            }
+            console.log(ob)
+            getArtical(ob).then((res) => {
+                this.Articals = []
+                let datas = res.data.data
+                for(let ele in res.data.data){
+                    let obj = {
+                        title:datas[ele].title,
+                        tag:datas[ele].tag.split(';'),
+                        description:datas[ele].description,
+                        content:datas[ele].content,
+                        createTime:datas[ele].createTime,
+                        updateTime:datas[ele].updateTime,
+                        classification:datas[ele].classification,
+                    }
+                    this.Articals.push(obj)
+                }
+            })
+        }
     },
     mounted() {
-        
-        this.windowHeight = document.body.clientHeight - 30;
+        this.windowHeight = window.screen.height - 190;
         getCls().then((res)=>{
-        this.classes= [];
-        let datas = res.data.data
-        for(let ele in res.data.data){
-            let obj = {
-            name:datas[ele].name,
-            imgUrl:datas[ele].avatar,
-            id:datas[ele]._id,
+            this.classes= [];
+            let datas = res.data.data
+            for(let ele in res.data.data){
+                let obj = {
+                name:datas[ele].name,
+                imgUrl:datas[ele].avatar,
+                id:datas[ele]._id,
+                }
+                this.classes.push(obj)
             }
-            this.classes.push(obj)
-        }
         })
+        let element = document.getElementById('all')
+        element.classList.add('act')
         getArtical({}).then((res) => {
-            console.log(res)
             let datas = res.data.data
             for(let ele in res.data.data){
                 let obj = {
@@ -148,11 +188,22 @@ p,div{
         width:160px;
         height: auto;
         float: left;
+        box-shadow: 1px 0 0px #2d8cf0;
+        .act{
+            border-right: 4px solid #2d8cf0;
+            background: #f0faff;
+            // border-top: 1px solid #FF6600;
+            // border-bottom: 1px solid #FF6600;
+            // border-bottom: 1px solid #FF6600;
+            p{
+                color:#2d8cf0;
+            }
+        }
         .classification_el{
-            width: 164px;
+            width: 156px;
             height: 50px;
-            box-shadow: 1px 0 0px #2d8cf0;
             display: flex;
+            cursor:pointer;
             &:hover{
                 border-right: 4px solid #2d8cf0;
                 background: #f0faff;
@@ -163,10 +214,7 @@ p,div{
                     color:#2d8cf0;
                 }
             }
-            .cla_img{
-                width: 50px;
-                height: 50px;
-                // float: left;
+            div{
                 img{
                     width: 25px;
                     height: 25px;
@@ -183,7 +231,10 @@ p,div{
                 // float: left;
                 color: #515a6e;
                 // margin-top: -5px;
-                padding-top: 15px;
+                p{
+                    height: 100%;
+                    padding-top: 15px;
+                }
             }
         }
     }
