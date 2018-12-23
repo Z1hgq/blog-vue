@@ -20,15 +20,6 @@
         </div>
         <div class="content" :style="getScreenHeight">
             <Scroll :height='windowHeight'>
-            <h1>数据api开发中～</h1>
-            <h3>前台导航</h3>
-            <h3>前台路由</h3>
-            <h3>摄影图轮播</h3>
-            <h3>后台导航及路由</h3>
-            <h3>登录模块</h3>
-            <h3>登录模块api及token验证</h3> 
-            <h3>图片上传api</h3>
-            <h3>文章分类上传api</h3>
             <div class="content_el" v-for="item in Articals" :key="item.id">    
                 <a href=""><h2>{{item.title}}</h2></a> 
                 <p>{{item.description}}</p>
