@@ -2,16 +2,16 @@
   <div class="articaladmin">
     <div class="artical_info" v-for="item in Articals" :key="item.id">
       <div class="info">
-      <router-link :to="{name:'detail',params:{id:item.id}}">
-        <h2>{{item.title}}</h2>
-      </router-link>
-      <div >
-        <Tag color="cyan">{{item.classification}}</Tag>
-        <span>{{item.createTime}}</span>
-      </div>
+        <router-link :to="{name:'detail',params:{id:item.id}}">
+            <h2>{{item.title}}</h2>
+        </router-link>
+        <div >
+            <Tag color="cyan">{{item.classification}}</Tag>
+            <span>{{item.createTime}}</span>
+        </div>
       </div>
       <div class="opreation">
-          <Button @click="showdelDialog">删除</Button>
+          <Button @click="showdelDialog(item.id)">删除</Button>
           <Modal v-model="showdialog" width="360">
             <p slot="header" style="color:#f60;text-align:center">
             <Icon type="ios-information-circle"></Icon>
@@ -22,7 +22,7 @@
                 <p>Will you delete it?</p>
             </div>
             <div slot="footer">
-             <Button type="error" size="large" long :loading="modal_loading" @click="deleteArtical(item.id)">Delete</Button>
+             <Button type="error" size="large" long :loading="modal_loading" @click="deleteArtical">Delete</Button>
             </div>
           </Modal>
           <Button>编辑</Button>
@@ -37,6 +37,7 @@ export default {
   name: "articaladmin",
   data() {
     return {
+        del_id:'',
         modal_loading: false,
         showdialog:false,
         classes: [],
@@ -45,12 +46,13 @@ export default {
   },
   props: ["meta"],
   methods: {
-      showdelDialog:function(){
-          this.showdialog = true
+      showdelDialog:function(data){
+          this.del_id = data;
+          this.showdialog = true;
       },
-      deleteArtical:function(data){
-          this.showdialog = false
-          var obj = {_id:data}
+      deleteArtical:function(){
+          this.showdialog = false;
+          var obj = {_id:this.del_id};
           delArtical(obj).then((res) => {
               console.log(res)
               getArtical({}).then(res => {
