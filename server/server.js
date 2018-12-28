@@ -64,7 +64,7 @@ app.use(require('cors')())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// 单图上传
+// 单图上传接口
 app.post('/upload_img', upload.single('logo'), function(req, res, next) {
     var file = req.file;
     var path = file.path;
@@ -78,128 +78,135 @@ app.post('/upload_img', upload.single('logo'), function(req, res, next) {
     }
 
 });
+//登录接口
 app.post('/login', urlencodedParser, (req, res) => {
-    if (!req.body) return res.sendStatus(400)
-    if (md5(req.body.password) === user.pw && req.body.userName === user.name) {
-        var expires = moment().add('days', 1).valueOf()
-        var token = jwt.encode({
-            iss: user.id,
-            exp: expires,
-        }, app.get('jwtTokenSecret'))
-        res.send({
-            token: token,
-            success: true
-        })
-    } else {
-        res.send({
-            token: '',
-            success: false
-        })
-    }
-    console.log(req.body)
-})
-app.post('/addBlogCla', (req, res) => {
-    if (!req.body) {
-        return res.sendStatus(400)
-    } else {
-        var whereStr = { name: req.body.name }; // 查询条件
-        BlogCls.find(whereStr, (err, ress) => {
-            console.log(ress.length)
-            if (ress.length !== 0) {
-                res.send({
-                    success: '0',
-                    message: '请勿添加已有的分类'
-                })
-            } else {
-                BlogCls.insertMany(req.body, (errr, resss) => {
-                    if (errr) {
-                        res.send({
-                            success: '0',
-                            message: '添加失败'
-                        })
-                    } else {
-                        res.send({
-                            success: '1',
-                            message: '添加成功'
-                        })
-                        console.log("分类添加成功");
-                    }
-                })
-            }
-        })
-    }
-})
-app.get('/test', (req, res) => {
-    if (!req.body) {
-        return res.sendStatus(400)
-    } else {
-        Artical.find({}, (err, ress) => {
-            res.send(ress)
-        })
-    }
-})
-app.get('/getCls', (req, res) => {
-    if (!req.body) {
-        return res.sendStatus(400)
-    } else {
-        BlogCls.find({}, (err, ress) => {
-            if (err) {
-                res.send({
-                    success: '0',
-                    message: '分类信息获取失败'
-                })
-            } else {
-                res.send({
-                    success: '1',
-                    message: '分类信息获取成功',
-                    data: ress,
-                })
-            }
-        })
-    }
-})
-app.post('/articalUp', (req, res) => {
-    if (!req.body) {
-        return res.sendStatus(400)
-    } else {
-        Artical.insertMany(req.body, (errr, resss) => {
-            if (errr) {
-                res.send({
-                    success: '0',
-                    message: '上传失败'
-                })
-            } else {
-                res.send({
-                    success: '1',
-                    message: '上传成功'
-                })
-                console.log("文章上传成功");
-            }
-        })
-    }
-})
-app.post('/articalGet', (req, res) => {
-    if (!req.body) {
-        return res.sendStatus(400);
-    } else {
+        if (!req.body) return res.sendStatus(400)
+        if (md5(req.body.password) === user.pw && req.body.userName === user.name) {
+            var expires = moment().add('days', 1).valueOf()
+            var token = jwt.encode({
+                iss: user.id,
+                exp: expires,
+            }, app.get('jwtTokenSecret'))
+            res.send({
+                token: token,
+                success: true
+            })
+        } else {
+            res.send({
+                token: '',
+                success: false
+            })
+        }
         console.log(req.body)
-        Artical.find(req.body, (err, ress) => {
-            if (err) {
-                res.send({
-                    success: '0',
-                    data: [],
-                    message: '获取文章失败！'
-                })
-            } else {
-                res.send({
-                    success: '1',
-                    data: ress,
-                    message: '获取文章成功！'
-                })
-            }
-        })
-    }
-})
+    })
+    //添加文章分类
+app.post('/addBlogCla', (req, res) => {
+        if (!req.body) {
+            return res.sendStatus(400)
+        } else {
+            var whereStr = { name: req.body.name }; // 查询条件
+            BlogCls.find(whereStr, (err, ress) => {
+                console.log(ress.length)
+                if (ress.length !== 0) {
+                    res.send({
+                        success: '0',
+                        message: '请勿添加已有的分类'
+                    })
+                } else {
+                    BlogCls.insertMany(req.body, (errr, resss) => {
+                        if (errr) {
+                            res.send({
+                                success: '0',
+                                message: '添加失败'
+                            })
+                        } else {
+                            res.send({
+                                success: '1',
+                                message: '添加成功'
+                            })
+                            console.log("分类添加成功");
+                        }
+                    })
+                }
+            })
+        }
+    })
+    //测试接口
+app.get('/test', (req, res) => {
+        if (!req.body) {
+            return res.sendStatus(400)
+        } else {
+            Artical.find({}, (err, ress) => {
+                res.send(ress)
+            })
+        }
+    })
+    //获取分类信息
+app.get('/getCls', (req, res) => {
+        if (!req.body) {
+            return res.sendStatus(400)
+        } else {
+            BlogCls.find({}, (err, ress) => {
+                if (err) {
+                    res.send({
+                        success: '0',
+                        message: '分类信息获取失败'
+                    })
+                } else {
+                    res.send({
+                        success: '1',
+                        message: '分类信息获取成功',
+                        data: ress,
+                    })
+                }
+            })
+        }
+    })
+    //上传文章
+app.post('/articalUp', (req, res) => {
+        if (!req.body) {
+            return res.sendStatus(400)
+        } else {
+            Artical.insertMany(req.body, (errr, resss) => {
+                if (errr) {
+                    res.send({
+                        success: '0',
+                        message: '上传失败'
+                    })
+                } else {
+                    res.send({
+                        success: '1',
+                        message: '上传成功'
+                    })
+                    console.log("文章上传成功");
+                }
+            })
+        }
+    })
+    //获取文章列表
+app.post('/articalGet', (req, res) => {
+        if (!req.body) {
+            return res.sendStatus(400);
+        } else {
+            console.log(req.body)
+            Artical.find(req.body, (err, ress) => {
+                if (err) {
+                    res.send({
+                        success: '0',
+                        data: [],
+                        message: '获取文章失败！'
+                    })
+                } else {
+                    res.send({
+                        success: '1',
+                        data: ress,
+                        message: '获取文章成功！'
+                    })
+                }
+            })
+        }
+    })
+    //获取文章内容
 app.post('/getArticalContent', (req, res) => {
     if (!req.body) {
         return res.sendStatus(400);
@@ -217,6 +224,28 @@ app.post('/getArticalContent', (req, res) => {
                     success: '1',
                     data: ress,
                     message: '获取内容成功！'
+                })
+            }
+        })
+    }
+})
+app.post('/delArtical', (req, res) => {
+    if (!req.body) {
+        return res.sendStatus(400);
+    } else {
+        console.log(req.body)
+        Artical.deleteOne(req.body, (err, ress) => {
+            if (err) {
+                res.send({
+                    success: '0',
+                    data: [],
+                    message: '删除文章失败！'
+                })
+            } else {
+                res.send({
+                    success: '1',
+                    data: ress,
+                    message: '删除文章成功！'
                 })
             }
         })

@@ -1,7 +1,7 @@
 <template>
     <div class="blog">
         <div class="classification" :style="getScreenHeight">
-            <div class="classification_el" id="all" @click.capture="changeClassification">
+            <div class="classification_el" id="all" @click.capture="changeClassification('all')">
                 <div class="_all" style="width:50px;height:50px">
                     <img src="/static/img/classification.png" alt="" class="_all">
                 </div>
@@ -9,12 +9,12 @@
                     <p class="_all">全部分类</p>
                 </div>
             </div>
-            <div class="classification_el" v-for="cla in classes" :key="cla.id" :id="cla.name" @click.capture="changeClassification">
-                <div :class="'_'+cla.name" style="width:50px;height:50px">
-                    <img :src="cla.imgUrl" alt="" :class="'_'+cla.name">
+            <div class="classification_el" v-for="cla in classes" :key="cla.id" :id="cla.name" @click="changeClassification(cla.name)">
+                <div style="width:50px;height:50px">
+                    <img :src="cla.imgUrl" alt="" >
                 </div>
                 <div class="cla_name">
-                    <p :class="'_'+cla.name">{{cla.name}}</p>
+                    <p>{{cla.name}}</p>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
             <Scroll :height='windowHeight'>
             <div class="content_el" v-for="item in Articals" :key="item.id">    
                 <!-- <a href=""><h2>{{item.title}}</h2></a>  -->
-                <router-link :to="{name:'detail',params:{id:item.id,content:item.content}}"><h2>{{item.title}}</h2></router-link>
+                <router-link :to="{name:'detail',params:{id:item.id}}"><h2>{{item.title}}</h2></router-link>
                 <p>{{item.description}}</p>
                 <div class="artTag"><Tag v-for="el in item.tag" :key="el.id" color='warning'>{{el}}</Tag></div>
                 <div class="artInfo">
@@ -60,9 +60,8 @@ export default {
         // getScreenHeight(){
         //     return 'height:' + this.windowHeight +'px'
         // }
-        changeClassification(e){
-            var id = e.target.className.replace('_','')
-            this.clsName = id
+        changeClassification(e){  
+            this.clsName = e
             var ids = ['all']
             for(let ele in this.classes){
                 ids.push(this.classes[ele].name)
@@ -72,7 +71,7 @@ export default {
                 el.classList.remove('act')
             }
             try{
-                let actEl = document.getElementById(id)
+                let actEl = document.getElementById(e)
                 actEl.classList.add('act')
             }catch(err){
                 console.log(err)
@@ -91,7 +90,6 @@ export default {
                         title:datas[ele].title,
                         tag:datas[ele].tag.split(';'),
                         description:datas[ele].description,
-                        content:datas[ele].content,
                         createTime:datas[ele].createTime,
                         updateTime:datas[ele].updateTime,
                         classification:datas[ele].classification,
@@ -126,7 +124,6 @@ export default {
                     title:datas[ele].title,
                     tag:datas[ele].tag.split(';'),
                     description:datas[ele].description,
-                    content:datas[ele].content,
                     createTime:datas[ele].createTime,
                     updateTime:datas[ele].updateTime,
                     classification:datas[ele].classification,

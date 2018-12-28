@@ -1,5 +1,5 @@
 <template>
-    <div v-html="content">
+    <div v-html="content" class="detail">
     </div>
 </template>
 <script>
@@ -22,3 +22,15 @@ export default {
     }
 }
 </script>
+<style lang="less">
+.detail{
+    width: 1200px;
+    height: auto;
+    min-height: 640px;
+    // background: #99cccc;
+    margin-top:60px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%,0%);
+}
+</style>

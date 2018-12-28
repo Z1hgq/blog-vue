@@ -37,3 +37,12 @@ export const articalUp = ({ title, tag, description, content, createTime, update
         method: 'post'
     })
 }
+
+export const delArtical = ({ _id }) => {
+    const data = { _id }
+    return axios.request({
+        url: 'delArtical',
+        data,
+        method: 'post'
+    })
+}
