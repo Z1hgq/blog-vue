@@ -21,7 +21,8 @@
         <div class="content" :style="getScreenHeight">
             <Scroll :height='windowHeight'>
             <div class="content_el" v-for="item in Articals" :key="item.id">    
-                <a href=""><h2>{{item.title}}</h2></a> 
+                <!-- <a href=""><h2>{{item.title}}</h2></a>  -->
+                <router-link :to="{name:'detail',params:{id:item.id,content:item.content}}"><h2>{{item.title}}</h2></router-link>
                 <p>{{item.description}}</p>
                 <div class="artTag"><Tag v-for="el in item.tag" :key="el.id" color='warning'>{{el}}</Tag></div>
                 <div class="artInfo">
@@ -94,9 +95,11 @@ export default {
                         createTime:datas[ele].createTime,
                         updateTime:datas[ele].updateTime,
                         classification:datas[ele].classification,
+                        id:datas[ele]._id
                     }
                     this.Articals.push(obj)
                 }
+               
             })
         }
     },
@@ -127,6 +130,7 @@ export default {
                     createTime:datas[ele].createTime,
                     updateTime:datas[ele].updateTime,
                     classification:datas[ele].classification,
+                    id:datas[ele]._id
                 }
                 this.Articals.push(obj)
             }

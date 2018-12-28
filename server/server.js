@@ -200,6 +200,28 @@ app.post('/articalGet', (req, res) => {
         })
     }
 })
+app.post('/getArticalContent', (req, res) => {
+    if (!req.body) {
+        return res.sendStatus(400);
+    } else {
+        console.log(req.body)
+        Artical.find(req.body, (err, ress) => {
+            if (err) {
+                res.send({
+                    success: '0',
+                    data: [],
+                    message: '获取内容失败！'
+                })
+            } else {
+                res.send({
+                    success: '1',
+                    data: ress,
+                    message: '获取内容成功！'
+                })
+            }
+        })
+    }
+})
 
 app.listen(3000, () => {
     console.log('App is listening port 3000')

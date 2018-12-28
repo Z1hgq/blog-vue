@@ -33,6 +33,15 @@ export default [{
                 component: () =>
                     import ('@/views/Photo.vue')
             },
+            {
+                path: '/blog_detail/:id',
+                name: 'detail',
+                meta: {
+                    active: 'tapblog'
+                },
+                component: () =>
+                    import ('@/views/blog/detail.vue')
+            }
         ]
     },
     {

@@ -8,3 +8,12 @@ export const getArtical = ({ classification }) => {
         method: 'post'
     })
 }
+
+export const getArticalContent = ({ _id }) => {
+    const data = { _id }
+    return axios.request({
+        url: 'getArticalContent?t=' + Date.now(),
+        data,
+        method: 'post'
+    })
+}
