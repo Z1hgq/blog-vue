@@ -52,27 +52,7 @@ export default {
                     name:'分类测试'
                 },
             ],
-            Articals:[
-                {
-                    title:'标题title test题title test题title test题title test题title test题title test题title test ',
-                    tag:['标签','dasfa','ffasf'],
-                    description:'描述descriptiondescriptiondescriptiondescriptiondescription',
-                    content:'content content content content content content content content content content content content ',
-                    createTime:'213123',
-                    updateTime:'423423414',
-                    classification:'Python',
-                },
-                {
-                    title:'title test ',
-                    tag:'bisadhj;dasfa;ffasf;',
-                    description:'descri题title test题title test题title test题title test题title test题title test题title test题title test题title testdescriptiondescriptiondescription',
-                    content:'content content content content content content content content content content content content ',
-                    createTime:'213123',
-                    updateTime:'423423414',
-                    classification:'分类',
-                },
-          
-            ]
+            Articals:[]
         }
     },
     methods:{
