@@ -18,8 +18,9 @@
                <span>Delete confirmation</span>
             </p>
             <div style="text-align:center">
+                <h1>{{item.title}}</h1>
+                <br>
                 <p>确定删除该文章吗</p>
-                <p>Will you delete it?</p>
             </div>
             <div slot="footer">
              <Button type="error" size="large" long :loading="modal_loading" @click="deleteArtical">Delete</Button>
@@ -55,10 +56,10 @@ export default {
           var obj = {_id:this.del_id};
           delArtical(obj).then((res) => {
               console.log(res)
-              getArtical({}).then(res => {
+              getArtical({}).then(ress => {
                   this.Articals = [];
-                  let datas = res.data.data;
-                  for (let ele in res.data.data) {
+                  let datas = ress.data.data;
+                  for (let ele in ress.data.data) {
                     let obj = {
                     title: datas[ele].title,
                     tag: datas[ele].tag.split(";"),

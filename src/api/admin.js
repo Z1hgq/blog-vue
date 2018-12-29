@@ -46,3 +46,12 @@ export const delArtical = ({ _id }) => {
         method: 'post'
     })
 }
+
+export const delCls = ({ _id, classification }) => {
+    const data = { _id, classification };
+    return axios.request({
+        url: 'delCls',
+        data,
+        method: 'post'
+    })
+}

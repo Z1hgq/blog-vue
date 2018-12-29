@@ -251,6 +251,31 @@ app.post('/delArtical', (req, res) => {
         })
     }
 })
+app.post('/delCls', (req, res) => {
+    if (!req.body) {
+        return res.sendStatus(400);
+    } else {
+        console.log(req.body)
+        let updateObj = { classification: req.body.classification };
+        let delBoj = { _id: req.body._id }
+        Artical.updateMany(updateObj, { $set: { classification: '未分类' } }, (err, ress) => {})
+        BlogCls.deleteOne(delBoj, (err, ress) => {
+            if (err) {
+                res.send({
+                    success: '0',
+                    data: [],
+                    message: '删除分类失败！'
+                })
+            } else {
+                res.send({
+                    success: '1',
+                    data: ress,
+                    message: '删除分类成功！'
+                })
+            }
+        })
+    }
+})
 
 app.listen(3000, () => {
     console.log('App is listening port 3000')

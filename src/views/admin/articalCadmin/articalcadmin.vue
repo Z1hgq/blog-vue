@@ -1,5 +1,5 @@
 <template>
-  <div style="padding:15px">
+  <div style="padding:15px;width:960px;min-width:960px;">
     <div class="clsinput">
       <!-- <form>
                 <input accept="image/*" id="upload_file" type="file" name="logo">
@@ -25,10 +25,113 @@
         <span v-else>Loading</span>
       </Button>
     </div>
-    <Table border :columns="columns" :data="clsdata"></Table>
+    <div class="clsTable">
+      <div class="tableEl">
+        <div class="name">
+          分类名称
+        </div>
+        <div class="id">
+          分类id
+        </div>
+        <div class="avatar">
+          分类图标
+        </div>
+        <div class="time">
+          创建时间
+        </div>
+        <div class="opreation" style="padding-top:10px">
+          操作
+        </div>
+      </div>
+      <div class="tableEl" v-for="item in clsdata" :key="item.id">
+        <div class="name">
+          {{item.name}}
+        </div>
+        <div class="id">
+          {{item.id}}
+        </div>
+        <div class="avatar">
+          <img :src="item.icon" alt="">
+        </div>
+        <div class="time">
+          {{item.time}}
+        </div>
+        <div class="opreation">
+          <Button @click="showdelDialog(item.id,item.name)">删除</Button>
+          <Modal v-model="showdialog" width="360">
+            <p slot="header" style="color:#f60;text-align:center">
+            <Icon type="ios-information-circle"></Icon>
+               <span>Delete confirmation</span>
+            </p>
+            <div style="text-align:center">
+                <h1>{{del_name}}</h1>
+                <br>
+                <p>确定删除该分类吗</p>
+            </div>
+            <div slot="footer">
+             <Button type="error" size="large" long :loading="modal_loading" @click="deleteCls">Delete</Button>
+            </div>
+          </Modal>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <style lang="less">
+.clsTable{
+  width: 100%;
+  margin-top: 20px;
+  .tableEl{
+    width: 100%;
+    height:40px;
+    margin: 0px 0;
+    border:1px solid #2d8cf0;
+    .name{
+      width: 15%;
+      height: 100%;
+      border-right: 1px solid #2d8cf0;
+      text-align: center;
+      padding-top:10px;
+      float: left;
+    }
+    .id{
+      width: 30%;
+      height: 100%;
+      border-right: 1px solid #2d8cf0;
+      text-align: center;
+      padding-top:10px;
+      float: left;
+    }
+    .avatar{
+      width: 10%;
+      height: 100%;
+      border-right: 1px solid #2d8cf0;
+      text-align: center;
+      padding-top:10px;
+      float: left;
+      img{
+        width: 30px;
+        height:30px;
+        margin-top: 5px;
+      }
+    }
+    .time{
+      width: 25%;
+      height: 100%;
+      border-right: 1px solid #2d8cf0;
+      text-align: center;
+      padding-top:10px;
+      float: left;
+    }
+    .opreation{
+      width: 20%;
+      height: 100%;
+      text-align: center;
+      padding-top:5px;
+      float: left;
+    }
+  }
+}
 .imgUp{
     height: 30px;
     opacity: 0;
@@ -46,18 +149,11 @@
     margin-left: 10px;
     width: 110px;
 }
-.ivu-table-wrapper {
-  position: relative;
-  border: 1px solid #dcdee2;
-  border-bottom: 0;
-  border-right: 0;
-  width: 800px;
-  margin-top: 30px;
-}
 .clsinput {
   display: flex;
   height: 90px;
   border: 2px solid #2d8cf0;
+  width: 100%;
   img{
     width: 30px;
     margin-top: 27px;
@@ -77,97 +173,51 @@
 
 <script>
 import { uploadImg } from "@/api/data"
-import { uploadCls, getCls} from "@/api/admin"
+import { uploadCls, getCls , delCls}from "@/api/admin"
 const sd = require('silly-datetime')
 var axios = require("axios");
 export default {
   data() {
     return {
+      del_name:'',
+      del_id:'',
+      modal_loading: false,
+      showdialog:false,
       imgUrl: "",
       loading2: false,
       clsname: "",
-      columns: [
-        {
-          title: "分类名称",
-          key: "name",
-          render: (h, params) => {
-            return h("div", [
-              h("Icon", {
-                props: {
-                  type: "person"
-                }
-              }),
-              h("strong", params.row.name)
-            ]);
-          }
-        },
-        {
-          title: "分类id",
-          key: "id"
-        },
-        {
-          title: "图标",
-          key: "icon"
-        },
-        {
-          title: "添加时间",
-          key: "time"
-        },
-        {
-          title: "操作",
-          key: "action",
-          width: 150,
-          align: "center",
-          render: (h, params) => {
-            return h("div", [
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "primary",
-                    size: "small"
-                  },
-                  style: {
-                    marginRight: "5px"
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.index);
-                    }
-                  }
-                },
-                "View"
-              ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "error",
-                    size: "small"
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index);
-                    }
-                  }
-                },
-                "Delete"
-              )
-            ]);
-          }
-        }
-      ],
-      clsdata: [
-        {
-          name: "John Brown",
-          id: 18,
-          icon: "New York No. 1 Lake Park",
-          time: "2018-12-18"
-        }
-      ]
+      clsdata: []
     };
   },
   methods: {
+    showdelDialog:function(id,name){
+      this.del_id = id;
+      this.del_name = name;
+      this.showdialog = true;
+    },
+    deleteCls:function(){
+      this.showdialog = false;
+      var obj = {
+        _id:this.del_id,
+        classification:this.del_name
+      }
+      delCls(obj).then((res) => {
+        getCls().then((ress)=>{
+          console.log(ress)
+          this.clsdata = [];
+          let datas = ress.data.data
+          for(let ele in ress.data.data){
+            let obj = {
+              name:datas[ele].name,
+              id:datas[ele]._id,
+              icon:datas[ele].avatar,
+              time:datas[ele].createTime
+            }
+            this.clsdata.push(obj)
+          }
+        })
+      })
+    },
     getImg() {
       var that = this;
       var formData = new FormData();
@@ -178,6 +228,7 @@ export default {
           that.imgUrl = res.data.filePath;
           that.$Message.success("Upload success~");
         } else {
+          that.$Message.error("Upload fail!");
         }
       })
     },
@@ -222,19 +273,6 @@ export default {
         })
       }
     },
-    show(index) {
-      this.$Modal.info({
-        title: "分类信息",
-        content: `分类名称：${this.clsdata[index].name}<br>分类ID：${
-          this.clsdata[index].id
-        }<br>图标：${this.clsdata[index].icon}<br>添加时间：${
-          this.clsdata[index].time
-        }`
-      });
-    },
-    remove(index) {
-      this.clsdata.splice(index, 1);
-    }
   },
   mounted() {
     getCls().then((res)=>{
