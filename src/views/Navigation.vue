@@ -63,7 +63,6 @@ export default {
 a,p{ 
     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
         Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    font-size: 18px;
     text-decoration: none;
 } 
 .nav {
@@ -76,6 +75,7 @@ a,p{
   display: flex;
   box-shadow: 0px 4px 4px #ccc;
   z-index: 99999;
+  font-size: 18px;
   .icon {
     height: 100%;
     width: 15%;

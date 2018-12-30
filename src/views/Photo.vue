@@ -106,7 +106,6 @@
 <style>
 div,p,a,span{
     font-family: "Microsoft YaHei", '\5FAE\8F6F\96C5\9ED1', "MicrosoftJhengHei", '\534E\6587\7EC6\9ED1', 'STHeiti', 'MingLiu';
-    font-size: 18px;
 }
 .banner{
   margin-top: 60px;

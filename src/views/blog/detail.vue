@@ -28,7 +28,7 @@ export default {
     height: auto;
     min-height: 640px;
     // background: #99cccc;
-    margin-top:60px;
+    margin-top:80px;
     position: relative;
     left: 50%;
     transform: translate(-50%,0%);

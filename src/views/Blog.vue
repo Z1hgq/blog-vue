@@ -144,9 +144,9 @@ export default {
 <style lang="less">
 p,div{ 
     font-family:"Microsoft YaHei",'微软雅黑',"MicrosoftJhengHei",'华文细黑','STHeiti','MingLiu' ;
-    font-size: 18px;
 } 
 .blog{
+    font-size: 18px;
     width: 1200px;
     height: auto;
     min-height: 640px;
