@@ -26,7 +26,9 @@
              <Button type="error" size="large" long :loading="modal_loading" @click="deleteArtical">Delete</Button>
             </div>
           </Modal>
-          <Button>编辑</Button>
+          <Button><router-link :to="{name:'articalEdite',params:{id:item.id}}">
+            编辑
+        </router-link></Button>
       </div>
     </div>
   </div>

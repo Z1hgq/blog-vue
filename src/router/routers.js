@@ -96,6 +96,16 @@ export default [{
                     import ('@/views/admin/articalCadmin/articalcadmin.vue')
             },
             {
+                path: '/admin/articalEdite/:id',
+                name: 'articalEdite',
+                meta: {
+                    activename: '1-2',
+                    openname: ['1']
+                },
+                component: () =>
+                    import ('@/views/admin/articalAdmin/articalEdite.vue')
+            },
+            {
                 path: '/admin/photoup',
                 name: 'photoup',
                 meta: {

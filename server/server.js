@@ -252,26 +252,59 @@ app.post('/delArtical', (req, res) => {
     }
 })
 app.post('/delCls', (req, res) => {
+        if (!req.body) {
+            return res.sendStatus(400);
+        } else {
+            console.log(req.body)
+            let updateObj = { classification: req.body.classification };
+            let delBoj = { _id: req.body._id }
+            Artical.updateMany(updateObj, { $set: { classification: '未分类' } }, (err, ress) => {})
+            BlogCls.deleteOne(delBoj, (err, ress) => {
+                if (err) {
+                    res.send({
+                        success: '0',
+                        data: [],
+                        message: '删除分类失败！'
+                    })
+                } else {
+                    res.send({
+                        success: '1',
+                        data: ress,
+                        message: '删除分类成功！'
+                    })
+                }
+            })
+        }
+    })
+    //更新文章
+app.post('/articalUpdate', (req, res) => {
     if (!req.body) {
         return res.sendStatus(400);
     } else {
         console.log(req.body)
-        let updateObj = { classification: req.body.classification };
-        let delBoj = { _id: req.body._id }
-        Artical.updateMany(updateObj, { $set: { classification: '未分类' } }, (err, ress) => {})
-        BlogCls.deleteOne(delBoj, (err, ress) => {
+        let updateObj = { _id: req.body._id };
+        let update = {
+            $set: {
+                title: req.body.title,
+                description: req.body.description,
+                tag: req.body.tag,
+                classification: req.body.classification,
+                content: req.body.content,
+                updateTime: req.body.updateTime
+            }
+        }
+        Artical.updateOne(updateObj, update, (err, ress) => {
             if (err) {
                 res.send({
                     success: '0',
-                    data: [],
-                    message: '删除分类失败！'
+                    message: '更新失败'
                 })
             } else {
                 res.send({
                     success: '1',
-                    data: ress,
-                    message: '删除分类成功！'
+                    message: '更新成功'
                 })
+                console.log("文章更新成功");
             }
         })
     }

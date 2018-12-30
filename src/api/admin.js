@@ -38,6 +38,23 @@ export const articalUp = ({ title, tag, description, content, createTime, update
     })
 }
 
+export const articalUpdate = ({ _id, title, tag, description, content, updateTime, classification }) => {
+    const data = {
+        _id,
+        title,
+        tag,
+        description,
+        content,
+        updateTime,
+        classification
+    }
+    return axios.request({
+        url: 'articalUpdate',
+        data,
+        method: 'post'
+    })
+}
+
 export const delArtical = ({ _id }) => {
     const data = { _id }
     return axios.request({
