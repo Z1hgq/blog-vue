@@ -112,7 +112,7 @@
       img{
         width: 30px;
         height:30px;
-        margin-top: 5px;
+        margin-top: -5px;
       }
     }
     .time{

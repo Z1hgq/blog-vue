@@ -60,12 +60,12 @@ export default {
 };
 </script>
 <style lang="less">
-a,p{ 
+.nav {
+    a,p{ 
     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
         Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     text-decoration: none;
-} 
-.nav {
+    }
   height: 60px;
   background-color: #fff;
   position: fixed;

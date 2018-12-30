@@ -32,5 +32,13 @@ export default {
     position: relative;
     left: 50%;
     transform: translate(-50%,0%);
+    // p{
+    //     strong{
+    //         font-size: 22px;
+    //     }
+    //     span{
+    //         font-size: 18px;
+    //     }
+    // }
 }
 </style>
