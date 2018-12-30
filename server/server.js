@@ -10,9 +10,7 @@ var mkdirp = require('mkdirp');
 const users = require('./user.json')
 const user = users[0]
 app.set('jwtTokenSecret', user.pw);
-
-
-
+app.use(express.json({ limit: '50mb' }));
 var uploadFolder = '../dist/upload/';
 mkdirp(uploadFolder, function(err) {
 
