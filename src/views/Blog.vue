@@ -63,6 +63,7 @@ export default {
         //     return 'height:' + this.windowHeight +'px'
         // }
         changeClassification(e){  
+            this.Articals = []
             this.showloading = true;
             this.clsName = e;
             var ids = ['all'];
@@ -84,9 +85,7 @@ export default {
             }else{
                 ob = {classification:this.clsName}//查询其他文章的时候传递文章分类名
             }
-            console.log(ob)
             getArtical(ob).then((res) => {
-                this.Articals = []
                 let datas = res.data.data
                 for(let ele in res.data.data){
                     let obj = {
