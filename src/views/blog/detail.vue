@@ -21,7 +21,7 @@ export default {
         console.log(obj)
         getArticalContent( obj ).then((res) => {
             console.log(res)
-            that.content = res.data.data[0].content;
+            that.content = res.data.data;
             that.showloading = false;
         })
     }

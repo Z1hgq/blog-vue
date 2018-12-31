@@ -195,9 +195,22 @@ app.post('/articalGet', (req, res) => {
                         message: '获取文章失败！'
                     })
                 } else {
+                    var sendData = [];
+                    for (let i in ress) {
+                        let obj = {
+                            title: ress[i].title,
+                            tag: ress[i].tag,
+                            description: ress[i].description,
+                            createTime: ress[i].createTime,
+                            updateTime: ress[i].updateTime,
+                            classification: ress[i].classification,
+                            _id: ress[i]._id
+                        }
+                        sendData.push(obj)
+                    }
                     res.send({
                         success: '1',
-                        data: ress,
+                        data: sendData,
                         message: '获取文章成功！'
                     })
                 }
@@ -220,7 +233,7 @@ app.post('/getArticalContent', (req, res) => {
             } else {
                 res.send({
                     success: '1',
-                    data: ress,
+                    data: ress[0].content,
                     message: '获取内容成功！'
                 })
             }
