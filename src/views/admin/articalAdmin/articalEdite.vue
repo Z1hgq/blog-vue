@@ -1,5 +1,8 @@
 <template>
   <div class="articalinfo">
+    <div class="box-shadow" v-if="showloading">
+        <div class="dot-revolution"></div>
+    </div>
     <div class="infoIn">
       <Tag checkable color="primary">标题</Tag><Input v-model="artTitle" placeholder="请输入标题..." style="width: 300px"/>
       <br>
@@ -56,6 +59,7 @@ export default {
   },
   data() {
     return {
+      showloading:true,
       loading:false,
       model:'',
       classes:[],
@@ -168,6 +172,7 @@ export default {
         that.description = res.data.data[0].description;
         that.classification = res.data.data[0].classification;
         that.content = res.data.data[0].content;
+        that.showloading = false;
     })
     getCls().then((res)=>{
       console.log(res)
@@ -189,8 +194,24 @@ export default {
 .articalinfo {
   width: 800px;
   padding-left: 10px;
+  margin-top: -20px;
+  padding-top: 30px;
   .infoIn{
     margin: 20px 0;
+  }
+  .box-shadow{
+    width: 790px;
+    height: 808px;
+    position: absolute;
+    background: rgba(255,255,255,0.8);
+    z-index: 10;
+    .dot-revolution{
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    opacity: 1;
+  }
   }
 }
 .quill-editor {
