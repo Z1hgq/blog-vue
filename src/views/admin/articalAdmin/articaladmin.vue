@@ -1,5 +1,6 @@
 <template>
   <div class="articaladmin">
+    <div class="dot-carousel" style="margin-left:380px;margin-top:200px" v-if="showloading"></div>
     <div class="artical_info" v-for="item in Articals" :key="item.id">
       <div class="info">
         <router-link :to="{name:'detail',params:{id:item.id}}">
@@ -40,6 +41,7 @@ export default {
   name: "articaladmin",
   data() {
     return {
+        showloading:true,
         del_id:'',
         modal_loading: false,
         showdialog:false,
@@ -104,6 +106,7 @@ export default {
         };
         this.Articals.push(obj);
       }
+      this.showloading = false;
     });
   }
 };

@@ -20,6 +20,7 @@
         </div>
         <div class="content" :style="getScreenHeight">
             <Scroll :height='windowHeight'>
+            <div class="dot-carousel" style="margin-left:380px;margin-top:200px" v-if="showloading"></div>
             <div class="content_el" v-for="item in Articals" :key="item.id">    
                 <!-- <a href=""><h2>{{item.title}}</h2></a>  -->
                 <router-link :to="{name:'detail',params:{id:item.id}}"><h2>{{item.title}}</h2></router-link>
@@ -44,6 +45,7 @@ export default {
     name:'Blog',
     data(){
         return{
+            showloading:true,
             getScreenHeight:'height:' +(window.screen.height - 190) + 'px',
             windowHeight:document.body.clientHeight,
             clsName:'',
@@ -61,8 +63,9 @@ export default {
         //     return 'height:' + this.windowHeight +'px'
         // }
         changeClassification(e){  
-            this.clsName = e
-            var ids = ['all']
+            this.showloading = true;
+            this.clsName = e;
+            var ids = ['all'];
             for(let ele in this.classes){
                 ids.push(this.classes[ele].name)
             }
@@ -97,7 +100,7 @@ export default {
                     }
                     this.Articals.push(obj)
                 }
-               
+                this.showloading = false;
             })
         }
     },
@@ -131,6 +134,7 @@ export default {
                 }
                 this.Articals.push(obj)
             }
+            this.showloading = false;
         })
         
 

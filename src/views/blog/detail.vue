@@ -24,7 +24,7 @@ export default {
 </script>
 <style lang="less">
 .detail{
-    width: 1200px;
+    width: 800px;
     height: auto;
     min-height: 640px;
     // background: #99cccc;

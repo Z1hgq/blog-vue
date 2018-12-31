@@ -81,6 +81,7 @@ export default {
     width: 15%;
     // display: flex;
     float: left;
+    min-width: 150px;
     img {
       width: 50px;
       height: 50px;
@@ -110,6 +111,7 @@ export default {
       width: 85%;
       height: 100%;
       float: right;
+      min-width: 300px;
       .el{
           width: 100px;
           height: 100%;
