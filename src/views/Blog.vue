@@ -220,14 +220,16 @@ export default {
         min-height: 640px;
         float: left;
         padding: 15px;
+        padding-left: 0px;
         .content_el{
             width: 100%;
             height:150px;
-            background: #FFFFEE;
             padding: 10px;
             margin: 10px 0;
-            border-radius: 5px;
+            box-shadow: 0px 3px 3px #ddd;
+            padding-left: 20px;
             a{
+                color: #2d8cf0 !important;
                 h2{
                     overflow:hidden;
                     text-overflow:ellipsis;

@@ -1,6 +1,9 @@
 <template>
+<div>
+    <div class="dot-revolution" v-if="showloading"></div>
     <div v-html="content" class="detail">
     </div>
+</div>
 </template>
 <script>
 import { getArticalContent } from "@/api/blog"
@@ -8,6 +11,7 @@ export default {
     name:'detail',
     data(){
         return{
+            showloading:true,
             content:''
         }
     },
@@ -18,11 +22,17 @@ export default {
         getArticalContent( obj ).then((res) => {
             console.log(res)
             that.content = res.data.data[0].content;
+            that.showloading = false;
         })
     }
 }
 </script>
 <style lang="less">
+.dot-revolution{
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
 .detail{
     width: 800px;
     height: auto;

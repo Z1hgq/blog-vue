@@ -175,7 +175,6 @@ export default {
         that.showloading = false;
     })
     getCls().then((res)=>{
-      console.log(res)
       this.classes= [];
       let datas = res.data.data
       for(let ele in res.data.data){
