@@ -22,7 +22,7 @@ export default {
         getArticalContent( obj ).then((res) => {
             console.log(res)
             that.content = res.data.data[0].content;
-            that.showloading = false;
+            // that.showloading = false;
         })
     }
 }
