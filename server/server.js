@@ -233,7 +233,7 @@ app.post('/getArticalContent', (req, res) => {
             } else {
                 res.send({
                     success: '1',
-                    data: ress[0].content,
+                    data: ress,
                     message: '获取内容成功！'
                 })
             }
