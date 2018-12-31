@@ -5,9 +5,9 @@
         {{title}}
     </h1>
     <div class="info">
-        <span>{{time}}</span><span style="margin-left:25px">标签：</span><span v-for="tag in tags" :key="tag.id">{{tag}};</span>
+        <span>{{time}}</span><span style="margin-left:25px" v-if="!showloading">标签：</span><span v-for="tag in tags" :key="tag.id">{{tag}};</span>
     </div>
-    <div class="blockquote">
+    <div class="blockquote" v-if="!showloading">
         {{description}}
     </div>
     <div v-html="content" class="content">
