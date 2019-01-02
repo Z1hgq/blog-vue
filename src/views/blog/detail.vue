@@ -17,8 +17,8 @@
 </template>
 <script>
 import { getArticalContent } from "@/api/blog";
-import comment from './comment.vue'
- import * as CommentData from '@/mock/mockCommentData'
+import comment from '@/views/blog/comment.vue'
+import * as CommentData from '@/mock/mockCommentData'
 export default {
     name:'detail',
     components:{comment},

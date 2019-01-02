@@ -324,10 +324,6 @@ export default {
       }
       .input-wrapper {
         padding: 10px;
-        .gray-bg-input,
-        .el-input__inner {
-          /*background-color: #67C23A;*/
-        }
         .btn-control {
           display: flex;
           justify-content: flex-end;
