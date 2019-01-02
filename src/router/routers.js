@@ -50,6 +50,12 @@ export default [{
         name: 'login',
     },
     {
+        path: '/blog/login',
+        component: () =>
+            import ('@/views/blog/login.vue'),
+        name: 'bloglogin'
+    },
+    {
         path: '/admin',
         component: Main,
         name: 'admin',

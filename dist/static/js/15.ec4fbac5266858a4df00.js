@@ -1,0 +1,2 @@
+webpackJsonp([15],{lTw2:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("div",[this._v("photoadmin")])},staticRenderFns:[]},a=n("VU/8")({name:"photoadmin",data:function(){return{}},props:["meta"],methods:{}},r,!1,null,null,null);t.default=a.exports}});
+//# sourceMappingURL=15.ec4fbac5266858a4df00.js.map

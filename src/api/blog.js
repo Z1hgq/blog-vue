@@ -17,3 +17,12 @@ export const getArticalContent = ({ _id }) => {
         method: 'post'
     })
 }
+
+export const githubLogin = ({ code }) => {
+    const data = { code }
+    return axios.request({
+        url: 'githubLogin',
+        data,
+        method: 'post'
+    })
+}

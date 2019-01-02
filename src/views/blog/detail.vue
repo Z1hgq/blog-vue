@@ -12,12 +12,16 @@
     </div>
     <div v-html="content" class="content">
     </div>
+    <comment :comments="commentData"></comment>
 </div>
 </template>
 <script>
-import { getArticalContent } from "@/api/blog"
+import { getArticalContent } from "@/api/blog";
+import comment from './comment.vue'
+ import * as CommentData from '@/mock/mockCommentData'
 export default {
     name:'detail',
+    components:{comment},
     data(){
         return{
             showloading:true,
@@ -26,9 +30,12 @@ export default {
             time:'',
             tags:[],
             description:'',
+            commentData: []
         }
     },
     mounted(){
+        this.commentData = CommentData.comment.data;
+        // console.log(this.commentData)
         var that = this
         var obj = {_id:this.$route.params.id}
         console.log(obj)

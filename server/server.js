@@ -1,23 +1,48 @@
-var fs = require('fs');
-const express = require('express')
-const app = express()
-var bodyParser = require('body-parser')
-const md5 = require('MD5')
-var jwt = require('jwt-simple');
-const moment = require('moment')
-var multer = require("multer")
-var mkdirp = require('mkdirp');
-const users = require('./user.json')
+const fs = require('fs');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const md5 = require('MD5');
+const jwt = require('jwt-simple');
+const moment = require('moment');
+const multer = require("multer");
+const mkdirp = require('mkdirp');
+const request = require('request');
+const axios = require('axios');
+const fetch = require('node-fetch');
+const users = require('./user.json');
 const user = users[0]
 app.set('jwtTokenSecret', user.pw);
 app.use(express.json({ limit: '50mb' }));
-var uploadFolder = '../dist/upload/';
+const uploadFolder = '../dist/upload/';
 mkdirp(uploadFolder, function(err) {
 
         // path exists unless there was an error
 
     })
     // 通过 filename 属性定制
+const githubConfig = {
+    // 客户ID
+    client_ID: '8ee10db11a206bed9e71',
+    // 客户密匙
+    client_Secret: 'b54b1eeeec71714d0447732678d03cd9e11b32ee',
+    // 获取 access_token
+    // eg: https://github.com/login/oauth/access_token?client_id=7***************6&client_secret=4***************f&code=9dbc60118572de060db4&redirect_uri=http://manage.hgdqdev.cn/#/login
+    access_token_url: 'https://github.com/login/oauth/access_token',
+    // 获取用户信息
+    // eg: https://api.github.com/user?access_token=86664b010dbb841a86d4ecc38dfeb8ac673b9430&scope=&token_type=bearer
+    user_info_url: 'https://api.github.com/user?',
+    // 回调地址
+    redirect_uri: 'http://127.0.0.1:8080/dist/blog/login'
+}
+const getAccessToken = ({ client_ID, client_Secret, code }) => {
+    const data = { client_ID, client_Secret, code }
+    return axios.request({
+        url: githubConfig.access_token_url,
+        data,
+        method: 'post'
+    })
+}
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, uploadFolder); // 保存的路径，备注：需要自己创建
@@ -318,6 +343,62 @@ app.post('/articalUpdate', (req, res) => {
                 console.log("文章更新成功");
             }
         })
+    }
+})
+
+app.post('/githubLogin', (req, res) => {
+    if (!req.body) {
+        return res.sendStatus(400);
+    } else {
+        let code = req.body.code
+        console.log(req.body)
+        if (req.body.code == '') {
+            res.send({
+                message: '参数错误',
+                status: 103
+            })
+            return
+        }
+        request({
+                url: githubConfig.access_token_url,
+                form: {
+                    client_id: githubConfig.client_ID,
+                    client_secret: githubConfig.client_Secret,
+                    code: code,
+                }
+            },
+            function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var urlStr = githubConfig.user_info_url + body;
+                    request({
+                            url: urlStr,
+                            headers: {
+                                'User-Agent': 'Z1hgq'
+                            }
+                        },
+                        function(error, response, resbody) {
+                            if (!error) {
+                                res.end(JSON.stringify({
+                                    msg: '获取成功',
+                                    status: 100,
+                                    data: JSON.parse(resbody)
+                                }));
+                            } else {
+                                res.end(JSON.stringify({
+                                    msg: '获取用户信息失败',
+                                    status: 102
+                                }));
+                            }
+                        }
+                    )
+                } else {
+                    res.end(JSON.stringify({
+                        msg: '获取用户信息失败',
+                        status: 101
+                    }));
+                }
+            }
+        )
     }
 })
 
