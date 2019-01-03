@@ -49,7 +49,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/,
+                // exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/,
                 loader: 'babel-loader',
                 include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
             },
@@ -82,8 +82,9 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({ template: 'index.html' }),
         new webpack.ProvidePlugin({
-            'window.Quill': 'quill'
-        })
+            'window.Quill': 'quill/dist/quill.js',
+            'Quill': 'quill/dist/quill.js',
+        }),
     ],
     node: {
         // prevent webpack from injecting useless setImmediate polyfill because Vue
