@@ -49,7 +49,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                // exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/,
+                exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/,
                 loader: 'babel-loader',
                 include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
             },
