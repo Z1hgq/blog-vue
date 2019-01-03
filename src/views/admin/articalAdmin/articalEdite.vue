@@ -48,7 +48,13 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import hljs from "highlight.js";
-import { quillEditor } from "vue-quill-editor"
+import { quillEditor ,Quill} from "vue-quill-editor"
+
+import {ImageDrop} from 'quill-image-drop-module'
+import ImageResize from 'quill-image-resize-module'
+Quill.register('modules/imageResize', ImageResize)
+Quill.register('modules/imageDrop', ImageDrop)
+
 import { getCls,articalUpdate } from '@/api/admin'
 import { getArticalContent } from "@/api/blog"
 const sd = require('silly-datetime')
@@ -89,7 +95,9 @@ export default {
           ],
           syntax: {
             highlight: text => hljs.highlightAuto(text).value
-          }
+          },
+          imageDrop: true,
+          imageResize: {}
         }
       }
     };
