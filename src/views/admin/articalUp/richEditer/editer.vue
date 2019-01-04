@@ -26,7 +26,7 @@
     
     <div class="quill-editor-example">
       <!-- quill-editor -->
-      <div class="imgUpDiv">
+      <div class="e_imgUpDiv">
         <input class="imgUp" type="file" ref="upload" name="logo" id="file" accept="image/*" @change="getImg"/>
         <label for="file"><Icon type="ios-albums-outline" />&nbsp上传图片</label>
     </div>
@@ -220,7 +220,7 @@ export default {
     opacity: 0;
     width: 1px;
 }
-.imgUpDiv{
+.e_imgUpDiv{
     background-color: #2d8cf0;
     color: aliceblue;
     border-radius: 5px;

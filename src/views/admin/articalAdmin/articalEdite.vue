@@ -28,6 +28,10 @@
     </div>
     <div class="quill-editor-example">
       <!-- quill-editor -->
+      <div class="e_imgUpDiv">
+        <input class="imgUp" type="file" ref="upload" name="logo" id="file" accept="image/*" @change="getImg"/>
+        <label for="file"><Icon type="ios-albums-outline" />&nbsp上传图片</label>
+    </div>
       <quill-editor
         ref="myTextEditor"
         v-model="content"
@@ -57,6 +61,7 @@ Quill.register('modules/imageDrop', ImageDrop)
 
 import { getCls,articalUpdate } from '@/api/admin'
 import { getArticalContent } from "@/api/blog"
+import { uploadImg } from "@/api/data"
 const sd = require('silly-datetime')
 export default {
   name: "articalEdite",
@@ -160,7 +165,21 @@ export default {
       console.log(this.content);
     },
     onEditorFocus(editor) {},
-    onEditorReady(editor) {}
+    onEditorReady(editor) {},
+    getImg() {
+      var that = this;
+      var formData = new FormData();
+      formData.append("logo", this.$refs.upload.files[0]);
+      uploadImg(formData).then((res)=>{
+        console.log(res.data);
+        if (res.data.success) {
+          that.content = that.content + '<img src=' + res.data.filePath + '>'
+          that.$Message.success("Upload success~");
+        } else {
+          that.$Message.error("Upload fail!");
+        }
+      })
+    },
   },
   computed: {
     editor() {
@@ -223,6 +242,26 @@ export default {
 }
 .quill-editor {
   height: 500px;
+}
+.imgUp{
+    height: 30px;
+    opacity: 0;
+    width: 1px;
+}
+.e_imgUpDiv{
+    background-color: #2d8cf0;
+    color: aliceblue;
+    border-radius: 5px;
+    /* margin-top: 26px; */
+    height: 28px;
+    /* padding-left: 7px; */
+    padding-top: 3px;
+    margin-right: 20px;
+    margin-left: 10px;
+    width: 85px;
+    text-align: center;
+    position: absolute;
+    margin: 35px 650px;
 }
 </style>
 
