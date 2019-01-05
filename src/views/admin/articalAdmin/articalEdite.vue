@@ -31,7 +31,7 @@
       <div class="e_imgUpDiv">
         <input class="imgUp" type="file" ref="upload" name="logo" id="file" accept="image/*" @change="getImg"/>
         <label for="file"><Icon type="ios-albums-outline" />&nbsp上传图片</label>
-    </div>
+      </div>
       <quill-editor
         ref="myTextEditor"
         v-model="content"

@@ -4,7 +4,8 @@
     </div>
 </template>
 <script>
-import { githubLogin } from '@/api/blog'
+import { githubLogin } from '@/api/blog';
+import {localRead,localSave} from '@/libs/util';
 export default {
     name:'bloglogin',
     data(){
@@ -19,7 +20,8 @@ export default {
             code:this.code
         }
         githubLogin(obj).then((res) => {
-            console.log(res.data.data)
+            localSave('blogUserInfo',JSON.stringify(res.data.data))
+            window.location.href = localRead('login_url')
         })
     }
 }

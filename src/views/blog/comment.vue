@@ -1,6 +1,8 @@
 <!--评论模块-->
 <template>
   <div class="comment-container">
+    <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71" v-if="!userinfo"><img src="@/assets/images/github.png" alt="" @click="seturl"></a>
+    <a v-if='userinfo' :href="userinfo.html_url"><img :src="userinfo.avatar_url" :alt="userinfo.email"></a>
     <transition name="fade">
       <div class="input-wrapper">
         <el-input
@@ -11,15 +13,18 @@
           autofocus
           placeholder="写下你的评论"
         ></el-input>
-        <div class="btn-control">
+        <div class="btn-control" v-if="userinfo">
           <span class="cancel" @click="cancel">取消</span>
           <el-button class="btn" type="success" round @click="commitComment">确定</el-button>
+        </div>
+        <div class="btn-control" v-if="!userinfo">
+          <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71"><el-button class="btn" type="success" round>登录</el-button></a>
         </div>
       </div>
     </transition>
     <div class="comment" v-for="item in comments" :key="item._id">
       <div class="info">
-        <img class="avatar" :src="item.fromAvatar" width="36" height="36">
+        <img class="avatar" :src="item.fromAvatar" width="36">
         <div class="right">
           <div class="name">{{item.fromName}}</div>
           <div class="date">{{item.date}}</div>
@@ -66,9 +71,12 @@
               autofocus
               placeholder="写下你的评论"
             ></el-input>
-            <div class="btn-control">
+            <div class="btn-control" v-if="userinfo">
               <span class="cancel" @click="cancel">取消</span>
               <el-button class="btn" type="success" round @click="commitComment">确定</el-button>
+            </div>
+            <div class="btn-control" v-if="!userinfo">
+              <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71"><el-button class="btn" type="success" round>登录</el-button></a>
             </div>
           </div>
         </transition>
@@ -85,12 +93,16 @@ Vue.use(Element);
 
 // or
 import { Input } from "element-ui";
-
+import {localSave,localRead} from '@/libs/util'
 Vue.component(Input.name, Input);
 export default {
   props: {
     comments: {
       type: Array,
+      required: true
+    },
+    pageinfos:{
+      type: Object,
       required: true
     }
   },
@@ -98,11 +110,15 @@ export default {
   data() {
     return {
       inputComment: "",
-      showItemId: ""
+      showItemId: "",
+      userinfo:{},
     };
   },
   computed: {},
   methods: {
+    seturl(){
+      localSave('login_url',this.pageinfos.pagepath)
+    },
     /**
      * 点赞
      */
@@ -132,6 +148,7 @@ export default {
      */
     commitComment() {
       console.log(this.inputComment);
+
     },
 
     /**
@@ -149,13 +166,18 @@ export default {
     }
   },
   created() {
-    console.log(this.comments);
+    if(localRead('blogUserInfo')){
+        this.userinfo = JSON.parse(localRead('blogUserInfo'))
+    }else{
+      this.userinfo = false
+    }
+    console.log(this.userinfo)
   }
 };
 </script>
 
 <style scoped lang="less">
-@color-main: #409eff;
+@color-main: #2d8cf0;
 @color-success: #67c23a;
 @color-warning: #e6a23c;
 @color-danger: #f56c6c;
@@ -174,6 +196,11 @@ export default {
 
 @content-bg-color: #fff;
 .comment-container {
+  margin-top: 50px;
+  img{
+    width: 50px;
+    border-radius: 25px;
+  }
   .btn-control {
     display: flex;
     justify-content: flex-end;

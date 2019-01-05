@@ -28,7 +28,6 @@ export default {
   methods: {
     ...mapActions([
       'handleLogin',
-      'getUserInfo'
     ]),
     handleSubmit ({ userName, password }) {
       login({ userName, password }).then(res => {
