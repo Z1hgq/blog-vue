@@ -88,13 +88,13 @@
 <script>
 import Vue from "vue";
 import Element from "element-ui";
-
 Vue.use(Element);
 
 // or
 import { Input } from "element-ui";
 import {localSave,localRead} from '@/libs/util'
-Vue.component(Input.name, Input);
+Vue.use(Input);
+const sd = require('silly-datetime')
 export default {
   props: {
     comments: {
@@ -148,7 +148,16 @@ export default {
      */
     commitComment() {
       console.log(this.inputComment);
-
+      let obj = {
+        date: sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss'), //评论时间
+        ownerId: this.pageinfos.pageid, //文章的id
+        // fromId: this.userinfo., //评论者id
+        fromName: String, //评论者昵称
+        fromAvatar: String, //评论者头像
+        likeNum: Number, //点赞人数
+        content: String, //评论内容
+        reply: Array //评论回复
+      }
     },
 
     /**

@@ -79,6 +79,16 @@ const Artical = mongoose.model('Artical', new mongoose.Schema({
     updateTime: String,
     classification: String,
 }))
+const Comments = mongoose.model('Artical', new mongoose.Schema({
+    date: String, //评论时间
+    ownerId: String, //文章的id
+    fromId: String, //评论者id
+    fromName: String, //评论者昵称
+    fromAvatar: String, //评论者头像
+    likeNum: Number, //点赞人数
+    content: String, //评论内容
+    reply: Array //评论回复
+}))
 
 app.use(express.static('public'))
     //解决跨域问题
