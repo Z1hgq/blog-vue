@@ -39,8 +39,10 @@ export default [{
                 meta: {
                     active: 'tapblog'
                 },
-                component: () =>
-                    import ('@/views/blog/detail.vue')
+                component: (resolve) => {
+                    require(['@/views/blog/detail.vue'], resolve)
+                }
+
             }
         ]
     },
