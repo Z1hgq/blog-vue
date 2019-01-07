@@ -101,10 +101,11 @@ import Vue from "vue";
 import Element from "element-ui";
 Vue.use(Element);
 
-import { Input } from "element-ui";
+import { Input ,Button} from "element-ui";
 import { localSave, localRead } from "@/libs/util";
 import { submitComment, getComments ,submitReply} from "@/api/blog";
 Vue.use(Input);
+Vue.use(Button)
 const sd = require("silly-datetime");
 export default {
   props: {
