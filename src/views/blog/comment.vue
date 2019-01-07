@@ -1,8 +1,15 @@
 <!--评论模块-->
 <template>
   <div class="comment-container">
-    <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71" v-if="!userinfo"><img src="@/assets/images/github.png" alt="" @click="seturl"></a>
-    <a v-if='userinfo' :href="userinfo.html_url"><img :src="userinfo.avatar_url" :alt="userinfo.email"></a>
+    <a
+      href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71"
+      v-if="!userinfo"
+    >
+      <img src="@/assets/images/github.png" alt @click="seturl">
+    </a>
+    <a v-if="userinfo" :href="userinfo.html_url">
+      <img :src="userinfo.avatar_url" :alt="userinfo.email">
+    </a>
     <transition name="fade">
       <div class="input-wrapper">
         <el-input
@@ -18,15 +25,17 @@
           <el-button class="btn" type="success" round @click="commitComment">确定</el-button>
         </div>
         <div class="btn-control" v-if="!userinfo">
-          <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71"><el-button class="btn" type="success" round>登录</el-button></a>
+          <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71">
+            <el-button class="btn" type="success" round>登录</el-button>
+          </a>
         </div>
       </div>
     </transition>
     <div class="comment" v-for="item in comments" :key="item._id">
       <div class="info">
-        <img class="avatar" :src="item.fromAvatar" width="36">
+        <a :href="item.fromGithub"><img class="avatar" :src="item.fromAvatar" width="36"></a>
         <div class="right">
-          <div class="name">{{item.fromName}}</div>
+          <div class="name"><a :href="item.fromGithub">{{item.fromName}}</a></div>
           <div class="date">{{item.date}}</div>
         </div>
       </div>
@@ -36,7 +45,7 @@
           <i class="iconfont icon-like"></i>
           <span class="like-num">{{item.likeNum > 0 ? item.likeNum + '人赞' : '赞'}}</span>
         </span>
-        <span class="comment-reply" @click="showCommentInput(item)">
+        <span class="comment-reply" @click="showReplyInput(item)">
           <i class="iconfont icon-comment"></i>
           <span>回复</span>
         </span>
@@ -44,20 +53,20 @@
       <div class="reply">
         <div class="item" v-for="reply in item.reply" :key="reply._id">
           <div class="reply-content">
-            <span class="from-name">{{reply.fromName}}</span>
+            <span class="from-name"><a :href="reply.fromGithub">{{reply.fromName}}</a></span>
             <span>:</span>
-            <span class="to-name">@{{reply.toName}}</span>
+            <span class="to-name"><a :href="reply.toGithub">@{{reply.toName}}</a></span>
             <span>{{reply.content}}</span>
           </div>
           <div class="reply-bottom">
             <span>{{reply.date}}</span>
-            <span class="reply-text" @click="showCommentInput(item, reply)">
+            <span class="reply-text" @click="showReplyInput(item,reply)">
               <i class="iconfont icon-comment"></i>
               <span>回复</span>
             </span>
           </div>
         </div>
-        <div class="write-reply" v-if="item.reply.length > 0" @click="showCommentInput(item)">
+        <div class="write-reply" v-if="item.reply.length > 0" @click="showReplyInput(item)">
           <i class="el-icon-edit"></i>
           <span class="add-comment">添加新评论</span>
         </div>
@@ -65,7 +74,7 @@
           <div class="input-wrapper" v-if="showItemId === item._id">
             <el-input
               class="gray-bg-input"
-              v-model="inputComment"
+              v-model="inputReply"
               type="textarea"
               :rows="3"
               autofocus
@@ -73,10 +82,12 @@
             ></el-input>
             <div class="btn-control" v-if="userinfo">
               <span class="cancel" @click="cancel">取消</span>
-              <el-button class="btn" type="success" round @click="commitComment">确定</el-button>
+              <el-button class="btn" type="success" round @click="commitReply()">确定</el-button>
             </div>
             <div class="btn-control" v-if="!userinfo">
-              <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71"><el-button class="btn" type="success" round>登录</el-button></a>
+              <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71">
+                <el-button class="btn" type="success" round>登录</el-button>
+              </a>
             </div>
           </div>
         </transition>
@@ -90,18 +101,14 @@ import Vue from "vue";
 import Element from "element-ui";
 Vue.use(Element);
 
-// or
 import { Input } from "element-ui";
-import {localSave,localRead} from '@/libs/util'
+import { localSave, localRead } from "@/libs/util";
+import { submitComment, getComments ,submitReply} from "@/api/blog";
 Vue.use(Input);
-const sd = require('silly-datetime')
+const sd = require("silly-datetime");
 export default {
   props: {
-    comments: {
-      type: Array,
-      required: true
-    },
-    pageinfos:{
+    pageinfos: {
       type: Object,
       required: true
     }
@@ -109,15 +116,19 @@ export default {
   components: {},
   data() {
     return {
+      comments: [],
       inputComment: "",
+      inputReply: "",
       showItemId: "",
-      userinfo:{},
+      userinfo: {},
+      item_id: "",
+      reply_id: ""
     };
   },
   computed: {},
   methods: {
-    seturl(){
-      localSave('login_url',this.pageinfos.pagepath)
+    seturl() {
+      localSave("login_url", this.pageinfos.pagepath);
     },
     /**
      * 点赞
@@ -142,22 +153,96 @@ export default {
     cancel() {
       this.showItemId = "";
     },
-
+    commitReply() {
+      var that = this
+      var item_id = this.item_id;
+      var reply = [];
+      var toObj = {};
+      for (let i in this.comments) {
+        if (this.comments[i]._id == item_id) {
+          toObj = this.comments[i];
+          break;
+        }
+      }
+      reply = [...toObj.reply];
+      if (this.reply_id != "") {
+        let reply_id = this.reply_id;
+        let obj = {};
+        for (let i in toObj.reply) {
+          if (toObj.reply[i]._id == reply_id) {
+            obj = toObj.reply[i];
+            break;
+          }
+        }
+        reply.push({
+          _id: Date.now(), //主键id
+          commentId: item_id, //父评论id，即父亲的id
+          fromId: this.userinfo.id, //评论者id
+          fromName: this.userinfo.login, //评论者昵称
+          fromAvatar: this.userinfo.avatar_url, //评论者头像
+          toId: obj.fromId, //被评论者id
+          toName: obj.fromName, //被评论者昵称
+          toAvatar: obj.fromAvatar, //被评论者头像
+          content: this.inputReply, //评论内容
+          date: sd.format(new Date(), "YYYY-MM-DD HH:mm:ss") //评论时间
+        })
+      } else {
+        reply.push({
+          _id: Date.now(), //主键id
+          commentId: item_id, //父评论id，即父亲的id
+          fromId: this.userinfo.id, //评论者id
+          fromName: this.userinfo.login, //评论者昵称
+          fromAvatar: this.userinfo.avatar_url, //评论者头像
+          fromGithub:this.userinfo.html_url,
+          toId: toObj.fromId, //被评论者id
+          toName: toObj.fromName, //被评论者昵称
+          toAvatar: toObj.fromAvatar, //被评论者头像
+          toGithub:toObj.html_url,
+          content: this.inputReply, //评论内容
+          date: sd.format(new Date(), "YYYY-MM-DD HH:mm:ss") //评论时间
+        });
+      }
+      let obj = {
+          _id: item_id,
+          reply: reply
+      };
+      console.log(obj)
+      submitReply(obj).then((res) => {
+        console.log(res)
+        var cObj = { ownerId: that.pageinfos.pageid };
+        getComments(cObj).then(res => {
+          that.comments = [...res.data.data];
+          that.inputReply = '';
+        });
+      })
+    },
     /**
      * 提交评论
      */
     commitComment() {
       console.log(this.inputComment);
+      var that = this;
       let obj = {
-        date: sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss'), //评论时间
+        date: sd.format(new Date(), "YYYY-MM-DD HH:mm:ss"), //评论时间
         ownerId: this.pageinfos.pageid, //文章的id
-        // fromId: this.userinfo., //评论者id
-        fromName: String, //评论者昵称
-        fromAvatar: String, //评论者头像
-        likeNum: Number, //点赞人数
-        content: String, //评论内容
-        reply: Array //评论回复
-      }
+        fromId: this.userinfo.id, //评论者id
+        fromName: this.userinfo.login, //评论者昵称
+        fromAvatar: this.userinfo.avatar_url, //评论者头像
+        fromGithub:this.userinfo.html_url,
+        likeNum: 0, //点赞人数
+        content: this.inputComment, //评论内容
+        reply: [] //评论回复
+      };
+      submitComment(obj).then(res => {
+        if (res.data.success == "1") {
+          var cObj = { ownerId: this.pageinfos.pageid };
+          getComments(cObj).then(res => {
+            this.inputComment = "";
+            this.comments = [...res.data.data];
+          });
+        } else {
+        }
+      });
     },
 
     /**
@@ -165,22 +250,28 @@ export default {
      * item: 当前大评论
      * reply: 当前回复的评论
      */
-    showCommentInput(item, reply) {
+    showReplyInput(item, reply) {
+      this.item_id = item._id;
       if (reply) {
-        this.inputComment = "@" + reply.fromName + " ";
+        // this.inputReply = "@" + reply.fromName + " ";
+        this.reply_id = reply._id;
       } else {
-        this.inputComment = "";
+        this.inputReply = "";
       }
       this.showItemId = item._id;
     }
   },
   created() {
-    if(localRead('blogUserInfo')){
-        this.userinfo = JSON.parse(localRead('blogUserInfo'))
-    }else{
-      this.userinfo = false
+    var that = this;
+    var cObj = { ownerId: that.pageinfos.pageid };
+    getComments(cObj).then(res => {
+      that.comments = [...res.data.data];
+    });
+    if (localRead("blogUserInfo")) {
+      this.userinfo = JSON.parse(localRead("blogUserInfo"));
+    } else {
+      this.userinfo = false;
     }
-    console.log(this.userinfo)
   }
 };
 </script>
@@ -206,7 +297,7 @@ export default {
 @content-bg-color: #fff;
 .comment-container {
   margin-top: 50px;
-  img{
+  img {
     width: 50px;
     border-radius: 25px;
   }

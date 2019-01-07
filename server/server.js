@@ -79,7 +79,7 @@ const Artical = mongoose.model('Artical', new mongoose.Schema({
     updateTime: String,
     classification: String,
 }))
-const Comments = mongoose.model('Artical', new mongoose.Schema({
+const Comments = mongoose.model('Comments', new mongoose.Schema({
     date: String, //评论时间
     ownerId: String, //文章的id
     fromId: String, //评论者id
@@ -169,7 +169,7 @@ app.get('/test', (req, res) => {
         if (!req.body) {
             return res.sendStatus(400)
         } else {
-            Artical.find({}, (err, ress) => {
+            Comments.find({}, (err, ress) => {
                 res.send(ress)
             })
         }
@@ -254,49 +254,51 @@ app.post('/articalGet', (req, res) => {
     })
     //获取文章内容
 app.post('/getArticalContent', (req, res) => {
-    if (!req.body) {
-        return res.sendStatus(400);
-    } else {
-        console.log(req.body)
-        Artical.find(req.body, (err, ress) => {
-            if (err) {
-                res.send({
-                    success: '0',
-                    data: [],
-                    message: '获取内容失败！'
-                })
-            } else {
-                res.send({
-                    success: '1',
-                    data: ress,
-                    message: '获取内容成功！'
-                })
-            }
-        })
-    }
-})
+        if (!req.body) {
+            return res.sendStatus(400);
+        } else {
+            console.log(req.body)
+            Artical.find(req.body, (err, ress) => {
+                if (err) {
+                    res.send({
+                        success: '0',
+                        data: [],
+                        message: '获取内容失败！'
+                    })
+                } else {
+                    res.send({
+                        success: '1',
+                        data: ress,
+                        message: '获取内容成功！'
+                    })
+                }
+            })
+        }
+    })
+    //删除文章
 app.post('/delArtical', (req, res) => {
-    if (!req.body) {
-        return res.sendStatus(400);
-    } else {
-        console.log(req.body)
-        Artical.deleteOne(req.body, (err, ress) => {
-            if (err) {
-                res.send({
-                    success: '0',
-                    data: [],
-                    message: '删除文章失败！'
-                })
-            } else {
-                res.send({
-                    success: '1',
-                    data: ress,
-                    message: '删除文章成功！'
-                })
-            }
-        })
-    }
-})
+        if (!req.body) {
+            return res.sendStatus(400);
+        } else {
+            console.log(req.body)
+            Artical.deleteOne(req.body, (err, ress) => {
+                if (err) {
+                    res.send({
+                        success: '0',
+                        data: [],
+                        message: '删除文章失败！'
+                    })
+                } else {
+                    res.send({
+                        success: '1',
+                        data: ress,
+                        message: '删除文章成功！'
+                    })
+                }
+            })
+        }
+    })
+    //删除分类
 app.post('/delCls', (req, res) => {
         if (!req.body) {
             return res.sendStatus(400);
@@ -324,94 +326,159 @@ app.post('/delCls', (req, res) => {
     })
     //更新文章
 app.post('/articalUpdate', (req, res) => {
+        if (!req.body) {
+            return res.sendStatus(400);
+        } else {
+            console.log(req.body)
+            let updateObj = { _id: req.body._id };
+            let update = {
+                $set: {
+                    title: req.body.title,
+                    description: req.body.description,
+                    tag: req.body.tag,
+                    classification: req.body.classification,
+                    content: req.body.content,
+                    updateTime: req.body.updateTime
+                }
+            }
+            Artical.updateOne(updateObj, update, (err, ress) => {
+                if (err) {
+                    res.send({
+                        success: '0',
+                        message: '更新失败'
+                    })
+                } else {
+                    res.send({
+                        success: '1',
+                        message: '更新成功'
+                    })
+                    console.log("文章更新成功");
+                }
+            })
+        }
+    })
+    //github登录
+app.post('/githubLogin', (req, res) => {
+        if (!req.body) {
+            return res.sendStatus(400);
+        } else {
+            let code = req.body.code
+            console.log(req.body)
+            if (req.body.code == '') {
+                res.send({
+                    message: '参数错误',
+                    status: 103
+                })
+                return
+            }
+            request({
+                    url: githubConfig.access_token_url,
+                    form: {
+                        client_id: githubConfig.client_ID,
+                        client_secret: githubConfig.client_Secret,
+                        code: code,
+                    }
+                },
+                function(error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        var urlStr = githubConfig.user_info_url + body;
+                        request({
+                                url: urlStr,
+                                headers: {
+                                    'User-Agent': 'Z1hgq'
+                                }
+                            },
+                            function(error, response, resbody) {
+                                if (!error) {
+                                    res.end(JSON.stringify({
+                                        msg: '获取成功',
+                                        status: 100,
+                                        data: JSON.parse(resbody)
+                                    }));
+                                } else {
+                                    res.end(JSON.stringify({
+                                        msg: '获取用户信息失败',
+                                        status: 102
+                                    }));
+                                }
+                            }
+                        )
+                    } else {
+                        res.end(JSON.stringify({
+                            msg: '获取用户信息失败',
+                            status: 101
+                        }));
+                    }
+                }
+            )
+        }
+    })
+    //添加评论
+app.post('/submitComment', (req, res) => {
+        if (!req.body) {
+            return res.sendStatus(400)
+        } else {
+            Comments.insertMany(req.body, (errr, resss) => {
+                if (errr) {
+                    res.send({
+                        success: '0',
+                        message: '添加失败'
+                    })
+                } else {
+                    res.send({
+                        success: '1',
+                        message: '添加成功'
+                    })
+                    console.log("添加成功");
+                }
+            })
+        }
+    })
+    //获取评论
+app.post('/getComments', (req, res) => {
+        if (!req.body) {
+            return res.sendStatus(400);
+        } else {
+            console.log(req.body)
+            Comments.find(req.body, (err, ress) => {
+                if (err) {
+                    res.send({
+                        success: '0',
+                        data: [],
+                        message: '获取内容失败！'
+                    })
+                } else {
+                    res.send({
+                        success: '1',
+                        data: ress,
+                        message: '获取内容成功！'
+                    })
+                }
+            })
+        }
+    })
+    //上传回复
+app.post('/submitReply', (req, res) => {
     if (!req.body) {
         return res.sendStatus(400);
     } else {
         console.log(req.body)
         let updateObj = { _id: req.body._id };
-        let update = {
-            $set: {
-                title: req.body.title,
-                description: req.body.description,
-                tag: req.body.tag,
-                classification: req.body.classification,
-                content: req.body.content,
-                updateTime: req.body.updateTime
-            }
-        }
-        Artical.updateOne(updateObj, update, (err, ress) => {
+        Comments.updateMany(updateObj, { $set: { reply: req.body.reply } }, (err, ress) => {
             if (err) {
                 res.send({
                     success: '0',
-                    message: '更新失败'
+                    message: '回复失败！'
                 })
             } else {
                 res.send({
                     success: '1',
-                    message: '更新成功'
+                    message: '回复成功！'
                 })
-                console.log("文章更新成功");
             }
         })
     }
 })
-
-app.post('/githubLogin', (req, res) => {
-    if (!req.body) {
-        return res.sendStatus(400);
-    } else {
-        let code = req.body.code
-        console.log(req.body)
-        if (req.body.code == '') {
-            res.send({
-                message: '参数错误',
-                status: 103
-            })
-            return
-        }
-        request({
-                url: githubConfig.access_token_url,
-                form: {
-                    client_id: githubConfig.client_ID,
-                    client_secret: githubConfig.client_Secret,
-                    code: code,
-                }
-            },
-            function(error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    var urlStr = githubConfig.user_info_url + body;
-                    request({
-                            url: urlStr,
-                            headers: {
-                                'User-Agent': 'Z1hgq'
-                            }
-                        },
-                        function(error, response, resbody) {
-                            if (!error) {
-                                res.end(JSON.stringify({
-                                    msg: '获取成功',
-                                    status: 100,
-                                    data: JSON.parse(resbody)
-                                }));
-                            } else {
-                                res.end(JSON.stringify({
-                                    msg: '获取用户信息失败',
-                                    status: 102
-                                }));
-                            }
-                        }
-                    )
-                } else {
-                    res.end(JSON.stringify({
-                        msg: '获取用户信息失败',
-                        status: 101
-                    }));
-                }
-            }
-        )
-    }
-})
-
 app.listen(3000, () => {
     console.log('App is listening port 3000')
 })

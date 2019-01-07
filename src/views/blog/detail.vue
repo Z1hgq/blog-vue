@@ -12,13 +12,13 @@
     </div>
     <div v-html="content" class="content">
     </div>
-    <comment :comments="commentData" :pageinfos='pageInfo'></comment>
+    <comment :pageinfos='pageInfo' v-if="!showloading"></comment>
 </div>
 </template>
 <script>
-import { getArticalContent } from "@/api/blog";
-import comment from '@/views/blog/comment.vue'
-import * as CommentData from '@/mock/mockCommentData'
+import { getArticalContent} from "@/api/blog";
+import comment from '@/views/blog/comment.vue';
+import * as CommentData from '@/mock/mockCommentData';
 export default {
     name:'detail',
     components:{comment},
@@ -38,13 +38,12 @@ export default {
         }
     },
     mounted(){
-        this.commentData = CommentData.comment.data;
+        // this.commentData = CommentData.comment.data;
         this.pageInfo.pageid = this.$route.params.id;
         this.pageInfo.pagepath = this.$route.path
-        var that = this
-        var obj = {_id:this.$route.params.id}
+        var that = this;
+        var obj = {_id:this.$route.params.id};
         getArticalContent( obj ).then((res) => {
-            console.log(res)
             that.content = res.data.data[0].content;
             that.title = res.data.data[0].title;
             that.time = res.data.data[0].createTime;
