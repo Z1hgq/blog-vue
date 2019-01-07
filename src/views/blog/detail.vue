@@ -16,12 +16,13 @@
 </div>
 </template>
 <script>
+import Vue from 'vue';
 import { getArticalContent} from "@/api/blog";
-import comment from '@/views/blog/comment.vue';
+import Comment from '@/views/blog/comment.vue';
 import * as CommentData from '@/mock/mockCommentData';
 export default {
     name:'detail',
-    components:{comment},
+    components:{Comment},
     data(){
         return{
             showloading:true,

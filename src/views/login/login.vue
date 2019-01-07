@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import LoginForm from '../../components/login-form'
+import LoginForm from '@/components/login-form'
 import { mapActions } from 'vuex'
 import { setToken } from '@/libs/util'
 import {

@@ -103,6 +103,7 @@ import { localSave, localRead } from "@/libs/util";
 import { submitComment, getComments ,submitReply} from "@/api/blog";
 const sd = require("silly-datetime");
 export default {
+  name:'Comment',
   props: {
     pageinfos: {
       type: Object,
