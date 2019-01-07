@@ -94,9 +94,9 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Element from "element-ui";
-Vue.use(Element);
+// import Vue from "vue";
+// import Element from "element-ui";
+// Vue.use(Element);
 import { localSave, localRead } from "@/libs/util";
 import { submitComment, getComments ,submitReply} from "@/api/blog";
 const sd = require("silly-datetime");
@@ -204,11 +204,22 @@ export default {
       console.log(obj)
       submitReply(obj).then((res) => {
         console.log(res)
-        var cObj = { ownerId: that.pageinfos.pageid };
-        getComments(cObj).then(res => {
-          that.comments = [...res.data.data];
-          that.inputReply = '';
-        });
+        if(res.data.message == '1'){
+          this.$Notice.success({
+              title:res.data.message,
+              desc:''
+          });
+          var cObj = { ownerId: that.pageinfos.pageid };
+          getComments(cObj).then(res => {
+            that.comments = [...res.data.data];
+            that.inputReply = '';
+          });
+        }else{
+          this.$Notice.error({
+              title:res.data.message,
+              desc:''
+          });
+        }
       })
     },
     /**
@@ -230,12 +241,20 @@ export default {
       };
       submitComment(obj).then(res => {
         if (res.data.success == "1") {
+          this.$Notice.success({
+              title:res.data.message,
+              desc:''
+          });
           var cObj = { ownerId: this.pageinfos.pageid };
           getComments(cObj).then(res => {
             this.inputComment = "";
             this.comments = [...res.data.data];
           });
         } else {
+          this.$Notice.error({
+              title:res.data.message,
+              desc:''
+          });
         }
       });
     },
