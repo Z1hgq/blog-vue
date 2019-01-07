@@ -17,7 +17,6 @@
           v-model="inputComment"
           type="textarea"
           :rows="3"
-          autofocus
           placeholder="写下你的评论"
         />
         <div class="btn-control" v-if="userinfo">
@@ -76,7 +75,6 @@
               v-model="inputReply"
               type="textarea"
               :rows="3"
-              autofocus
               placeholder="写下你的评论"
             />
             <div class="btn-control" v-if="userinfo">
