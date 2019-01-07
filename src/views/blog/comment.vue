@@ -201,10 +201,9 @@ export default {
           _id: item_id,
           reply: reply
       };
-      console.log(obj)
       submitReply(obj).then((res) => {
         console.log(res)
-        if(res.data.message == '1'){
+        if(res.data.success == '1'){
           this.$Notice.success({
               title:res.data.message,
               desc:''
