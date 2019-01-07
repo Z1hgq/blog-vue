@@ -12,21 +12,20 @@
     </a>
     <transition name="fade">
       <div class="input-wrapper">
-        <el-input
+        <Input
           class="gray-bg-input"
           v-model="inputComment"
           type="textarea"
           :rows="3"
           autofocus
           placeholder="写下你的评论"
-        ></el-input>
+        />
         <div class="btn-control" v-if="userinfo">
-          <span class="cancel" @click="cancel">取消</span>
-          <el-button class="btn" type="success" round @click="commitComment">确定</el-button>
+          <Button class="btn" type="success" round @click="commitComment">确定</Button>
         </div>
         <div class="btn-control" v-if="!userinfo">
-          <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71">
-            <el-button class="btn" type="success" round>登录</el-button>
+          <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71" @click="seturl">
+            <Button class="btn" type="success" round>登录</Button>
           </a>
         </div>
       </div>
@@ -72,21 +71,21 @@
         </div>
         <transition name="fade">
           <div class="input-wrapper" v-if="showItemId === item._id">
-            <el-input
+            <Input
               class="gray-bg-input"
               v-model="inputReply"
               type="textarea"
               :rows="3"
               autofocus
               placeholder="写下你的评论"
-            ></el-input>
+            />
             <div class="btn-control" v-if="userinfo">
               <span class="cancel" @click="cancel">取消</span>
-              <el-button class="btn" type="success" round @click="commitReply()">确定</el-button>
+              <Button class="btn" type="success" round @click="commitReply()">确定</Button>
             </div>
             <div class="btn-control" v-if="!userinfo">
-              <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71">
-                <el-button class="btn" type="success" round>登录</el-button>
+              <a href="https://github.com/login/oauth/authorize?client_id=8ee10db11a206bed9e71" @click="seturl">
+                <Button class="btn" type="success" round>登录</Button>
               </a>
             </div>
           </div>
@@ -100,12 +99,8 @@
 import Vue from "vue";
 import Element from "element-ui";
 Vue.use(Element);
-
-import { Input ,Button} from "element-ui";
 import { localSave, localRead } from "@/libs/util";
 import { submitComment, getComments ,submitReply} from "@/api/blog";
-Vue.use(Input);
-Vue.use(Button)
 const sd = require("silly-datetime");
 export default {
   props: {
