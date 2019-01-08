@@ -2,7 +2,7 @@
     <div class="blog">
         <div class="classification" :style="getScreenHeight">
             <div class="classification_el" id="all" @click.capture="changeClassification('all')">
-                <div class="_all" style="width:50px;height:50px">
+                <div class="_all" style="width:40%;height:50px;text-align:right">
                     <img src="/static/img/classification.png" alt="" class="_all">
                 </div>
                 <div class="cla_name">
@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="classification_el" v-for="cla in classes" :key="cla.id" :id="cla.name" @click="changeClassification(cla.name)">
-                <div style="width:50px;height:50px">
+                <div style="width:40%;height:50px;text-align:right">
                     <img :src="cla.imgUrl" alt="" >
                 </div>
                 <div class="cla_name">
@@ -32,9 +32,9 @@
             </div>
             </Scroll>
         </div>
-        <div class="info" :style="getScreenHeight">
+        <!-- <div class="info" :style="getScreenHeight">
 
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -46,7 +46,7 @@ export default {
     data(){
         return{
             showloading:true,
-            getScreenHeight:'height:' +(window.screen.height - 190) + 'px',
+            getScreenHeight:'height:' +(window.screen.height - 170) + 'px',
             windowHeight:document.body.clientHeight,
             clsName:'',
             classes:[
@@ -151,22 +151,33 @@ export default {
     font-family:"Microsoft YaHei",'微软雅黑',"MicrosoftJhengHei",'华文细黑','STHeiti','MingLiu' ;
     } 
     font-size: 18px;
-    width: 1200px;
+    width: 100%;
     height: auto;
     min-height: 640px;
-    // background: #99cccc;
-    margin-top:60px;
+    margin-top: 60px;
     position: relative;
-    left: 50%;
-    transform: translate(-50%,0%);
+    // position: relative;
+    // left: 50%;
+    // transform: translate(-50%,0%);
     .classification{
-        padding: 5px;
-        width:160px;
+        /* padding: 5px; */
+        width: 15%;
         height: auto;
         float: left;
-        box-shadow: 1px 0 0px #2d8cf0;
+        -webkit-box-shadow: 1px 0 0px #2d8cf0;
+        /* box-shadow: 1px 0 0px #2d8cf0; */
+        position: fixed;
+        left: 0;
+        top: 60px;
+        bottom: 0;
+        display: block;
+        overflow-y: scroll;
+        min-width: 180px;
+        z-index: 1000;
+        background: #fff;
         .act{
-            border-right: 4px solid #2d8cf0;
+            // border-right: 4px solid #2d8cf0;
+            outline: 1px solid #2d8cf0;
             background: #f0faff;
             // border-top: 1px solid #FF6600;
             // border-bottom: 1px solid #FF6600;
@@ -176,12 +187,13 @@ export default {
             }
         }
         .classification_el{
-            width: 156px;
+            width: 100%;
             height: 50px;
             display: flex;
             cursor:pointer;
             &:hover{
-                border-right: 4px solid #2d8cf0;
+                // border-right: 4px solid #2d8cf0;
+                outline: 1px solid #2d8cf0;
                 background: #f0faff;
                 // border-top: 1px solid #FF6600;
                 // border-bottom: 1px solid #FF6600;
@@ -195,14 +207,14 @@ export default {
                     width: 25px;
                     height: 25px;
                     position: relative;
-                    left: 50%;
+                    // left: 50%;
                     top:50%;
                     transform: translate(-50%,-50%);
                 }
             }
             .cla_name{
-                text-align: center;
-                width: 110px;
+                text-align: left;
+                width: 60%;
                 height: 50px;
                 // float: left;
                 color: #515a6e;
@@ -215,12 +227,16 @@ export default {
         }
     }
     .content{
-        width: 840px;
+        width: 85%;
         height: auto;
         min-height: 640px;
-        float: left;
-        padding: 15px;
+        /* float: right; */
+        /* padding: 15px; */
         padding-left: 0px;
+        /* margin-left: 15%; */
+        position: fixed;
+        left: 15%;
+        top: 60px;
         .content_el{
             width: 100%;
             height:150px;
@@ -250,12 +266,12 @@ export default {
             }
         }
     }
-    .info{
-        width: 196px;
-        height: auto;
-        min-height: 640px;
-        float: left;
-    }
+    // .info{
+    //     width: 15%;
+    //     height: auto;
+    //     min-height: 640px;
+    //     float: right;
+    // }
 }
 </style>
 
