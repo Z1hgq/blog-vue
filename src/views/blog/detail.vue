@@ -28,7 +28,7 @@ export default {
     data(){
         return{
             getScreenHeight:'height:' +(window.screen.height - 170) + 'px',
-            windowHeight:document.body.clientHeight,
+            windowHeight:window.screen.height - 170,
             showloading:true,
             content:'',
             title:'',
