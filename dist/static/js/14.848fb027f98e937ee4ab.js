@@ -1,2 +1,0 @@
-webpackJsonp([14],{QpWM:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("div",[this._v("photocadmin")])},staticRenderFns:[]},a=n("VU/8")({name:"photocadmin",data:function(){return{}},props:["meta"],methods:{}},r,!1,null,null,null);t.default=a.exports}});
-//# sourceMappingURL=14.848fb027f98e937ee4ab.js.map
