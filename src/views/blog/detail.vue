@@ -1,5 +1,6 @@
 <template>
-<div class="detail">
+<div class="detail" :style="getScreenHeight">
+    <Scroll :height='windowHeight'>
     <div class="dot-revolution" v-if="showloading"></div>
     <h1 class="title">
         {{title}}
@@ -13,6 +14,7 @@
     <div v-html="content" class="content">
     </div>
     <comment :pageinfos='pageInfo' v-if="!showloading"></comment>
+    </Scroll>
 </div>
 </template>
 <script>
@@ -25,6 +27,8 @@ export default {
     components:{Comment},
     data(){
         return{
+            getScreenHeight:'height:' +(window.screen.height - 170) + 'px',
+            windowHeight:document.body.clientHeight,
             showloading:true,
             content:'',
             title:'',
@@ -57,7 +61,7 @@ export default {
 </script>
 <style lang="less">
 .detail{
-    margin-top:80px;
+    margin-top:60px;
     width: 800px;
     height: auto;
     min-height: 640px;
