@@ -62,7 +62,8 @@ export default {
 <style lang="less">
 .detail{
     margin-top:60px;
-    width: 800px;
+    width:80%;
+    min-width: 800px;
     height: auto;
     min-height: 640px;
     position: relative;
