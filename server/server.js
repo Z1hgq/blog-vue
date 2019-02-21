@@ -224,6 +224,7 @@ app.post('/articalGet', (req, res) => {
             console.log(req.body)
             Artical.find(req.body, (err, ress) => {
                 if (err) {
+                    ß
                     res.send({
                         success: '0',
                         data: [],
@@ -249,7 +250,7 @@ app.post('/articalGet', (req, res) => {
                         message: '获取文章成功！'
                     })
                 }
-            })
+            }).sort('updateTime', -1)
         }
     })
     //获取文章内容
