@@ -1,6 +1,5 @@
 <template>
 <div class="detail" :style="getScreenHeight">
-    <Scroll :height='windowHeight'>
     <div class="dot-revolution" v-if="showloading"></div>
     <h1 class="title">
         {{title}}
@@ -14,7 +13,6 @@
     <div v-html="content" class="content">
     </div>
     <comment :pageinfos='pageInfo' v-if="!showloading"></comment>
-    </Scroll>
 </div>
 </template>
 <script>

@@ -223,34 +223,34 @@ app.post('/articalGet', (req, res) => {
         } else {
             console.log(req.body)
             Artical.find(req.body, (err, ress) => {
-                    if (err) {
-                        ß
-                        res.send({
-                            success: '0',
-                            data: [],
-                            message: '获取文章失败！'
-                        })
-                    } else {
-                        var sendData = [];
-                        for (let i in ress) {
-                            let obj = {
-                                title: ress[i].title,
-                                tag: ress[i].tag,
-                                description: ress[i].description,
-                                createTime: ress[i].createTime,
-                                updateTime: ress[i].updateTime,
-                                classification: ress[i].classification,
-                                _id: ress[i]._id
-                            }
-                            sendData.push(obj)
+                if (err) {
+                    ß
+                    res.send({
+                        success: '0',
+                        data: [],
+                        message: '获取文章失败！'
+                    })
+                } else {
+                    var sendData = [];
+                    for (let i in ress) {
+                        let obj = {
+                            title: ress[i].title,
+                            tag: ress[i].tag,
+                            description: ress[i].description,
+                            createTime: ress[i].createTime,
+                            updateTime: ress[i].updateTime,
+                            classification: ress[i].classification,
+                            _id: ress[i]._id
                         }
-                        res.send({
-                            success: '1',
-                            data: sendData,
-                            message: '获取文章成功！'
-                        })
+                        sendData.push(obj)
                     }
-                }) //.sort('updateTime', -1)
+                    res.send({
+                        success: '1',
+                        data: sendData,
+                        message: '获取文章成功！'
+                    })
+                }
+            })
         }
     })
     //获取文章内容

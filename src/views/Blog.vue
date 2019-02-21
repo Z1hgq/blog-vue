@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="content" :style="getScreenHeight">
+        <div class="content">
             <Scroll :height='windowHeight'>
             <div class="dot-carousel" style="margin-left:380px;margin-top:200px" v-if="showloading"></div>
             <div class="content_el" v-for="item in Articals" :key="item.id">    
@@ -145,7 +145,6 @@ export default {
 }
 </script>
 <style lang="less">
-
 .blog{
     p,div{ 
     font-family:"Microsoft YaHei",'微软雅黑',"MicrosoftJhengHei",'华文细黑','STHeiti','MingLiu' ;
