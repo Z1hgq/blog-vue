@@ -50,10 +50,6 @@ export default {
             windowHeight:document.body.clientHeight,
             clsName:'',
             classes:[
-                {
-                    imgUrl:'/static/img/classification.png',
-                    name:'分类测试'
-                },
             ],
             Articals:[]
         }
@@ -99,6 +95,7 @@ export default {
                     }
                     this.Articals.push(obj)
                 }
+                this.Articals = this.Articals.reverse()
                 this.showloading = false;
             })
         }
@@ -133,6 +130,7 @@ export default {
                 }
                 this.Articals.push(obj)
             }
+            this.Articals = this.Articals.reverse()
             this.showloading = false;
         })
         
