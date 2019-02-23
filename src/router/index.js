@@ -23,7 +23,8 @@ const turnTo = (to, access, next) => {
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start()
-    const token = getToken()
+        //const token = getToken()
+    const token = true
     if (!token && ADMIN_PAGE_ARRAY.includes(to.name, 0)) {
         // 未登录且要跳转的页面不是登录页
         next({
