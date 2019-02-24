@@ -32,9 +32,9 @@
             </div>
             </Scroll>
         </div>
-        <!-- <div class="info" :style="getScreenHeight">
+        <div class="info" :style="getScreenHeight">
 
-        </div> -->
+        </div>
     </div>
 </template>
 <script>
@@ -152,24 +152,27 @@ export default {
     height: auto;
     min-height: 640px;
     margin-top: 60px;
-    position: relative;
+    // position: relative;
+    display: grid;
+    // grid-template-rows: 100px;
+    grid-template-columns: 200px auto 300px;
     // position: relative;
     // left: 50%;
     // transform: translate(-50%,0%);
     .classification{
         /* padding: 5px; */
-        width: 15%;
-        height: auto;
-        float: left;
+        // width: 15%;
+        // height: auto;
+        // float: left;
         -webkit-box-shadow: 1px 0 0px #2d8cf0;
         /* box-shadow: 1px 0 0px #2d8cf0; */
-        position: fixed;
-        left: 0;
-        top: 60px;
-        bottom: 0;
+        // position: fixed;
+        // left: 0;
+        // top: 60px;
+        // bottom: 0;
         display: block;
         overflow-y: scroll;
-        min-width: 180px;
+        // min-width: 180px;
         z-index: 1000;
         background: #fff;
         .act{
@@ -224,16 +227,16 @@ export default {
         }
     }
     .content{
-        width: 85%;
-        height: auto;
+        // width: 85%;
+        // height: auto;
         min-height: 640px;
         /* float: right; */
         /* padding: 15px; */
         padding-left: 0px;
         /* margin-left: 15%; */
-        position: fixed;
-        left: 15%;
-        top: 60px;
+        // position: fixed;
+        // left: 15%;
+        // top: 60px;
         .content_el{
             width: 100%;
             height:150px;
