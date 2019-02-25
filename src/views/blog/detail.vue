@@ -58,7 +58,21 @@ export default {
 }
 </script>
 <style lang="less">
+h3 {
+    display: block;
+    font-size: 1.2em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+p{
+    font-size: 0.9em;
+    line-height: 1.1em;
+}
 .detail{
+    font-size: 18px;
     margin-top:60px;
     width:65%;
     min-width: 1000px;
@@ -103,7 +117,7 @@ export default {
     .content{
         margin-top: 10px;
         p{
-            font-size: 18px;
+            // font-size: 16px;
             strong{
                 font-size: 20px;
             }
