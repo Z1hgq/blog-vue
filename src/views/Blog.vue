@@ -1,6 +1,6 @@
 <template>
-    <div class="blog">
-        <div class="classification" :style="getScreenHeight">
+    <div class="blog" :style="getScreenHeight">
+        <div class="classification">
             <div class="classification_el" id="all" @click.capture="changeClassification('all')">
                 <div class="_all" style="width:40%;height:50px;text-align:right">
                     <img src="/static/img/classification.png" alt="" class="_all">
@@ -19,7 +19,6 @@
             </div>
         </div>
         <div class="content">
-            <Scroll :height='windowHeight'>
             <div class="dot-carousel" style="margin-left:380px;margin-top:200px" v-if="showloading"></div>
             <div class="content_el" v-for="item in Articals" :key="item.id">    
                 <!-- <a href=""><h2>{{item.title}}</h2></a>  -->
@@ -30,9 +29,8 @@
                     <Tag color="cyan">{{item.classification}}</Tag><span>{{item.createTime}}</span>
                 </div>
             </div>
-            </Scroll>
         </div>
-        <div class="info" :style="getScreenHeight">
+        <div class="info">
 
         </div>
     </div>
@@ -149,8 +147,9 @@ export default {
     } 
     font-size: 18px;
     width: 100%;
-    height: auto;
+    // height: auto;
     min-height: 640px;
+    // height: 100%;
     margin-top: 60px;
     // position: relative;
     display: grid;
@@ -237,6 +236,9 @@ export default {
         // position: fixed;
         // left: 15%;
         // top: 60px;
+        overflow-y: scroll;
+        // -ms-overflow-y: scroll;
+        // -moz-overflow-y: scroll;
         .content_el{
             width: 100%;
             height:150px;
