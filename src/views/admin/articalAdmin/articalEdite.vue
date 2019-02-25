@@ -260,8 +260,8 @@ export default {
     margin-left: 10px;
     width: 85px;
     text-align: center;
-    position: absolute;
-    margin: 35px 650px;
+    margin: 50px 0 -60px 690px;
+    position: relative;
 }
 </style>
 

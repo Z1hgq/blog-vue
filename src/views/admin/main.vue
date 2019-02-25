@@ -1,6 +1,6 @@
 <template>
-    <div style="display:flex;width: 1200px;margin-left: 50%;transform: translate(-50%);">
-        <Menu :active-name="$route.meta.activename" :open-names="$route.meta.openname">
+    <div class="adminContainer" :style="getScreenHeight">
+        <Menu :active-name="$route.meta.activename" :open-names="$route.meta.openname" class="menu">
         <Submenu name="1">
             <template slot="title">
                 <Icon type="ios-analytics" />
@@ -30,7 +30,7 @@
             </template>
         </Submenu> -->
     </Menu>
-    <div>
+    <div class="content">
         <router-view/>
     </div>
     </div>
@@ -41,6 +41,7 @@ export default {
     name:'Main',
     data () {
             return {
+                getScreenHeight:'height:' +(window.screen.height - 110) + 'px',
                 theme2: 'light'
             }
         },
@@ -52,6 +53,17 @@ export default {
 <style lang="less">
 a{
     color: #515a6e !important;
+}
+.adminContainer{
+    widows: 100%;
+    display: grid;
+    grid-template-columns: 240px auto;
+    .menu{
+        overflow-y: scroll;
+    }
+    .content{
+        overflow-y: scroll;
+    }
 }
 </style>
 

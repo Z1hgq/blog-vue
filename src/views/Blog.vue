@@ -31,7 +31,15 @@
             </div>
         </div>
         <div class="info">
-
+            <div class="searchBoxContainer">
+            <form action="" class="searchBox">
+                <div class="ivu-input-wrapper ivu-input-wrapper-default ivu-input-type">
+                <i class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i> 
+                <input autocomplete="off" spellcheck="false" type="search" placeholder="" class="ivu-input ivu-input-default"> 
+                </div>
+            </form>
+            <Icon type="ios-search-outline" size="28" class="searchIcon"/>
+            </div>
         </div>
     </div>
 </template>
@@ -163,7 +171,7 @@ export default {
         // width: 15%;
         // height: auto;
         // float: left;
-        -webkit-box-shadow: 1px 0 0px #2d8cf0;
+        // -webkit-box-shadow: 1px 0 0px #2d8cf0;
         /* box-shadow: 1px 0 0px #2d8cf0; */
         // position: fixed;
         // left: 0;
@@ -174,6 +182,7 @@ export default {
         // min-width: 180px;
         z-index: 1000;
         background: #fff;
+        border-right: 1px solid #2d8cf0;
         .act{
             // border-right: 4px solid #2d8cf0;
             outline: 1px solid #2d8cf0;
@@ -268,12 +277,24 @@ export default {
             }
         }
     }
-    // .info{
-    //     width: 15%;
-    //     height: auto;
-    //     min-height: 640px;
-    //     float: right;
-    // }
+    .info{
+        overflow-y: scroll;
+        border-left: 1px solid #2d8cf0;
+        .searchBoxContainer{
+            display: flex;
+            .searchBox{
+            width: 80%;
+            margin-left: 10%;
+            margin-top: 30px;
+            }
+        }
+        .searchIcon{
+            margin-top: 32px;
+            position: absolute;
+            right: 35px;
+        }
+        
+    }
 }
 </style>
 

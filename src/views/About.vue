@@ -33,12 +33,12 @@ export default {
     background-color:rgba(255, 255, 255, 0.5);
     position: absolute;
     left: 50%;
-    top:40%;
+    top:45%;
     transform: translate(-50%,-50%);
-    box-shadow:  -5px 0 5px 0 #2d8cf0, /*左边阴影*/
-        0 -5px 5px 0 #2d8cf0, /*顶部阴影*/
-        0 5px 5px 0 #2d8cf0, /*底部阴影*/
-        5px 0 5px 0 #2d8cf0; /*右边阴影*/
+    // box-shadow:  -5px 0 5px 0 #2d8cf0, /*左边阴影*/
+    //     0 -5px 5px 0 #2d8cf0, /*顶部阴影*/
+    //     0 5px 5px 0 #2d8cf0, /*底部阴影*/
+    //     5px 0 5px 0 #2d8cf0; /*右边阴影*/
     border-radius: 5px;
     .avatar{
         width: 100%;

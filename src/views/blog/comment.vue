@@ -309,7 +309,7 @@ export default {
 
 @content-bg-color: #fff;
 .comment-container {
-  margin-top: 50px;
+  margin: 50px 0 50px 0;
   img {
     width: 50px;
     border-radius: 25px;
