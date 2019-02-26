@@ -97,6 +97,7 @@ export default {
           syntax: {
             highlight: text => hljs.highlightAuto(text).value
           },
+          // syntax:true,
           imageDrop: true,
           imageResize: {}
         }

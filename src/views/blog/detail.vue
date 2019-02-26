@@ -53,6 +53,7 @@ export default {
             that.tags = res.data.data[0].tag.split(';');
             that.description = res.data.data[0].description;
             that.showloading = false;
+            document.title = that.title;
         })
     }
 }
