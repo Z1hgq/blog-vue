@@ -72,6 +72,10 @@ p{
     font-size: 0.9em;
     line-height: 1.1em;
 }
+pre {
+    font-family: monospace,monospace;
+    font-size: 0.8em;
+}
 .detail{
     font-size: 18px;
     margin-top:60px;
