@@ -74,7 +74,7 @@ p{
 }
 pre {
     font-family: monospace,monospace;
-    font-size: 0.8em;
+    font-size: 0.8em !important;
 }
 .detail{
     font-size: 18px;
