@@ -1,6 +1,7 @@
 import nav from '@/views/Navigation'
 import Login from '@/views/login/login.vue'
 import Main from '@/views/admin/main.vue'
+import sourceCodeMain from '@/views/sourcecode/sourceCodeMain.vue'
 
 export default [{
         path: '/',
@@ -181,5 +182,19 @@ export default [{
         },
         component: () =>
             import ('@/views/error-page/404.vue')
+    },
+    {
+        path: '/sourcecode',
+        name: 'sourcecode',
+        meta: {
+            hideInMenu: true
+        },
+        component: sourceCodeMain,
+        children: [{
+            path: '/sourcecode/layout',
+            name: 'sourcecode-layout',
+            component: () =>
+                import ('@/views/sourcecode/Layout.vue')
+        }]
     }
 ]
