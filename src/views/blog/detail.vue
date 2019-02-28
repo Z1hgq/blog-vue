@@ -75,6 +75,11 @@ p{
 pre {
     font-family: monospace,monospace;
     font-size: 0.8em !important;
+    background-color: #23241f;
+    color: #f8f8f2;
+    overflow: visible;
+    padding: 5px 10px 5px 10px !important;
+    border-radius: 5px;
 }
 .detail{
     font-size: 18px;
