@@ -40,6 +40,7 @@
           <span>{{item.createTime}}</span>
         </div>
       </div>
+      <BackToTop></BackToTop>
     </div>
     <div class="info">
       <div class="searchBoxContainer">
@@ -61,9 +62,9 @@
       </div>
       <!-- <Button v-on:click="backToTop()">回到顶部</Button> -->
       <div class="link">
-          <Tag>
-            <router-link :to="{name:'sourcecode-layout'}">三栏布局</router-link>
-          </Tag>
+        <Tag>
+          <router-link :to="{name:'sourcecode-layout'}">三栏布局</router-link>
+        </Tag>
       </div>
     </div>
   </div>
@@ -71,9 +72,13 @@
 <script>
 import { getCls } from "@/api/admin";
 import { getArtical } from "@/api/blog";
+import { setTimeout } from "timers";
+import { promises } from "fs";
+import BackToTop from "@/views/public/backToTop.vue";
 const sd = require("silly-datetime");
 export default {
   name: "Blog",
+  components:{BackToTop},
   data() {
     return {
       showloading: true,
@@ -132,7 +137,14 @@ export default {
     },
     backToTop() {
       var con = document.getElementById("blogContent");
-      con.scrollTop = 0;
+    //   while (con.scrollTop !== 0) {
+    //     con.scrollTop -= 1;
+    //   }
+      var currentScroll = con.scrollTop;
+      if (currentScroll > 0) {
+        window.requestAnimationFrame(this.backToTop);
+        con.scrollTo(0, currentScroll - currentScroll / 5);
+      }
     }
   },
   mounted() {
@@ -325,10 +337,10 @@ export default {
       position: absolute;
       right: 35px;
     }
-    .link{
-        width: 80%;
-        margin-left: 10%;
-        margin-top: 30px;
+    .link {
+      width: 80%;
+      margin-left: 10%;
+      margin-top: 30px;
     }
   }
 }

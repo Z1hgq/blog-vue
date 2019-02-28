@@ -13,6 +13,7 @@
     <div v-html="content" class="content">
     </div>
     <comment :pageinfos='pageInfo' v-if="!showloading"></comment>
+    <BackToTop></BackToTop>
 </div>
 </template>
 <script>
@@ -20,9 +21,10 @@ import Vue from 'vue';
 import { getArticalContent} from "@/api/blog";
 import Comment from '@/views/blog/comment.vue';
 import * as CommentData from '@/mock/mockCommentData';
+import BackToTop from "@/views/public/backToTop.vue";
 export default {
     name:'detail',
-    components:{Comment},
+    components:{Comment,BackToTop},
     data(){
         return{
             getScreenHeight:'height:' +(window.screen.height - 170) + 'px',
@@ -83,15 +85,18 @@ pre {
     overflow-x: scroll;
 }
 .detail{
+    overflow-y: scroll;
     font-size: 18px;
-    margin-top:60px;
-    width:65%;
+    margin-top: 60px;
+    width: 65%;
     min-width: 1000px;
     height: auto;
     min-height: 640px;
-    position: relative;
-    left: 50%;
-    transform: translate(-50%,0%);
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    margin: auto;
     .info{
         padding: 8px 0;
         span{
