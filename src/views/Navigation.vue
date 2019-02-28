@@ -1,23 +1,26 @@
 <template>
   <div>
     <div class="nav">
-    <div class="icon">
-      <a href="/"  rel="noopener noreferrer">
-        <div>
-          <img :src="img">
-        </div>
-        <div>
-          <span>{{name}}</span>
-        </div>
-      </a>
-    </div>
-    <div class="tap">
+      <div class="icon">
+        <a href="/" rel="noopener noreferrer">
+          <div>
+            <img :src="img">
+          </div>
+          <div>
+            <span>{{name}}</span>
+          </div>
+        </a>
+      </div>
+      <div class="tap">
         <div class="el" v-for="tap in taps" :key="tap.id" :id="tap.id">
-            <!-- <img :src="tap.icon" alt=""> -->
-            <div><Icon :type="tap.icon" class="tapicon"/><a :href="tap.link">{{tap.name}}</a></div>
+          <!-- <img :src="tap.icon" alt=""> -->
+          <div>
+            <Icon :type="tap.icon" class="tapicon"/>
+            <a :href="tap.link">{{tap.name}}</a>
+          </div>
         </div>
+      </div>
     </div>
-  </div>
     <router-view/>
   </div>
 </template>
@@ -27,45 +30,46 @@ export default {
   data() {
     return {
       name: "Z1hgq",
-      img:'/static/img/z1hgq.png',
-      taps:[
-          {
-              id:'tapabout',
-              icon:'ios-contact-outline',
-              name:'关于',
-              link:'/dist/about',
-              active:false
-          },
-          { 
-              id:'tapphoto',
-              icon:'ios-camera-outline',
-              name:'摄影',
-              link:'/dist/photo',
-              active:false
-          },
-          {
-              id:'tapblog',
-              icon:'ios-laptop',
-              name:'博客',
-              link:'/dist/blog',
-              active:true
-          },
-      ],
+      img: "/static/img/z1hgq.png",
+      taps: [
+        {
+          id: "tapabout",
+          icon: "ios-contact-outline",
+          name: "关于",
+          link: "/dist/about",
+          active: false
+        },
+        {
+          id: "tapphoto",
+          icon: "ios-camera-outline",
+          name: "摄影",
+          link: "/dist/photo",
+          active: false
+        },
+        {
+          id: "tapblog",
+          icon: "ios-laptop",
+          name: "博客",
+          link: "/dist/blog",
+          active: true
+        }
+      ]
     };
   },
-  mounted(){
-      var element = document.getElementById(this.$route.meta.active);
-      element.classList.add('act')
+  mounted() {
+    var element = document.getElementById(this.$route.meta.active);
+    element.classList.add("act");
   }
 };
 </script>
 <style lang="less">
 .nav {
-    a,p{ 
-    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  a,
+  p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     text-decoration: none;
-    }
+  }
   height: 60px;
   background-color: #fff;
   position: fixed;
@@ -100,49 +104,54 @@ export default {
       text-align: left;
     }
     a {
-      div{
-          width: 75px;
-          height: 100%;
-          float: left;
+      div {
+        width: 75px;
+        height: 100%;
+        float: left;
       }
     }
   }
-  .tap{
-      width: 85%;
+  @media screen and (max-width:900px){
+    .tap{
+        display: none;
+    }      
+  }
+  .tap {
+    width: 85%;
+    height: 100%;
+    float: right;
+    min-width: 300px;
+    .el {
+      width: 100px;
       height: 100%;
       float: right;
-      min-width: 300px;
-      .el{
-          width: 100px;
-          height: 100%;
-          float: right;
-          &:hover{
-              border-bottom: 2px solid #2d8cf0;
-              a{
-                  color:#2d8cf0;
-              }
-              .tapicon{
-                  color:#2d8cf0;
-              }
-          }
-          a{
-              color:#515a6e;
-              padding-left: 15px;
-          }
-          div{
-              width: 80px;
-              padding-top: 20px;
-          }
+      &:hover {
+        border-bottom: 2px solid #2d8cf0;
+        a {
+          color: #2d8cf0;
+        }
+        .tapicon {
+          color: #2d8cf0;
+        }
       }
-      .act{
-          border-bottom: 2px solid #2d8cf0;
-              a{
-                  color:#2d8cf0;
-              }
-              .tapicon{
-                  color:#2d8cf0;
-              }
+      a {
+        color: #515a6e;
+        padding-left: 15px;
       }
+      div {
+        width: 80px;
+        padding-top: 20px;
+      }
+    }
+    .act {
+      border-bottom: 2px solid #2d8cf0;
+      a {
+        color: #2d8cf0;
+      }
+      .tapicon {
+        color: #2d8cf0;
+      }
+    }
   }
 }
 </style>

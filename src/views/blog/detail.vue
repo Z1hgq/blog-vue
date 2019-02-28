@@ -85,13 +85,25 @@ pre {
     overflow-x: scroll;
 }
 .detail{
+        font-size: 18px;
+        margin-top: 60px;
+        width: 100%;
+        height: auto;
+        min-height: 640px;
+        padding: 0 10px 10px 10px;
+}
+@media screen and (min-width:1000px){
+    .detail{
+        font-size: 18px;
+        margin-top: 60px;
+        width: 65%;
+        height: auto;
+        min-height: 640px;
+    }
+}
+
+.detail{
     overflow-y: scroll;
-    font-size: 18px;
-    margin-top: 60px;
-    width: 65%;
-    min-width: 1000px;
-    height: auto;
-    min-height: 640px;
     position: absolute;
     top: 70px;
     left: 0;

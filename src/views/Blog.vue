@@ -191,6 +191,18 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@media screen and (max-width:900px) {
+    .blog{
+      grid-template-columns:auto !important;
+      display: block;
+      .classification{
+        display: none;
+      }
+      .info{
+        display: none;
+      }
+    }
+}
 .blog {
   p,
   div {
@@ -221,7 +233,7 @@ export default {
     // left: 0;
     // top: 60px;
     // bottom: 0;
-    display: block;
+    // display: block;
     overflow-y: scroll;
     // min-width: 180px;
     z-index: 1000;
@@ -334,7 +346,7 @@ export default {
     }
     .searchIcon {
       margin-top: 32px;
-      position: absolute;
+      position: relative;
       right: 35px;
     }
     .link {
