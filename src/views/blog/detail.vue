@@ -80,6 +80,7 @@ pre {
     overflow: visible;
     padding: 5px 10px 5px 10px !important;
     border-radius: 5px;
+    overflow-x: scroll;
 }
 .detail{
     font-size: 18px;
