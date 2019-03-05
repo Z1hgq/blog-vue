@@ -152,6 +152,9 @@ pre {
             span{
                 font-size: 18px;
             }
+        }
+        img{
+            max-width: 100%;
         }   
     }
 }

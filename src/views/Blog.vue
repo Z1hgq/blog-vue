@@ -63,7 +63,13 @@
       <!-- <Button v-on:click="backToTop()">回到顶部</Button> -->
       <div class="link">
         <Tag>
-          <router-link :to="{name:'sourcecode-layout'}">三栏布局</router-link>
+          <router-link :to="{name:'sourcecode-layout'}">CSS三栏布局</router-link>
+        </Tag>
+        <Tag>
+          <a href="https://juejin.im/post/5abb99e9f265da2392366824#heading-7" target="_blank">JavaScript作用域</a>
+        </Tag>
+        <Tag>
+          <a href="http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html" target="_blank" rel="noopener noreferrer">JS闭包</a>
         </Tag>
       </div>
     </div>
