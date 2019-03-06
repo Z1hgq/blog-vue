@@ -44,7 +44,7 @@
     </div>
     <div class="info">
       <div class="searchBoxContainer">
-        <form action class="searchBox">
+        <form class="searchBox" method="get" action="https://www.google.com/search">
           <div class="ivu-input-wrapper ivu-input-wrapper-default ivu-input-type">
             <i
               class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"
@@ -53,23 +53,32 @@
               autocomplete="off"
               spellcheck="false"
               type="search"
-              placeholder
+              placeholder="Google"
               class="ivu-input ivu-input-default"
+              name="q"
+              maxlength="255"
             >
+            <input type="submit" value="" class="google">
           </div>
         </form>
-        <Icon type="ios-search-outline" size="28" class="searchIcon"/>
+        <!-- <Icon type="ios-search-outline" size="28" class="searchIcon"/> -->
       </div>
-      <!-- <Button v-on:click="backToTop()">回到顶部</Button> -->
       <div class="link">
         <Tag>
           <router-link :to="{name:'sourcecode-layout'}">CSS三栏布局</router-link>
         </Tag>
         <Tag>
-          <a href="https://juejin.im/post/5abb99e9f265da2392366824#heading-7" target="_blank">JavaScript作用域</a>
+          <a
+            href="https://juejin.im/post/5abb99e9f265da2392366824#heading-7"
+            target="_blank"
+          >JavaScript作用域</a>
         </Tag>
         <Tag>
-          <a href="http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html" target="_blank" rel="noopener noreferrer">JS闭包</a>
+          <a
+            href="http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >JS闭包</a>
         </Tag>
       </div>
     </div>
@@ -84,7 +93,7 @@ import BackToTop from "@/views/public/backToTop.vue";
 const sd = require("silly-datetime");
 export default {
   name: "Blog",
-  components:{BackToTop},
+  components: { BackToTop },
   data() {
     return {
       showloading: true,
@@ -143,9 +152,9 @@ export default {
     },
     backToTop() {
       var con = document.getElementById("blogContent");
-    //   while (con.scrollTop !== 0) {
-    //     con.scrollTop -= 1;
-    //   }
+      //   while (con.scrollTop !== 0) {
+      //     con.scrollTop -= 1;
+      //   }
       var currentScroll = con.scrollTop;
       if (currentScroll > 0) {
         window.requestAnimationFrame(this.backToTop);
@@ -197,17 +206,17 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@media screen and (max-width:900px) {
-    .blog{
-      grid-template-columns:auto !important;
-      display: block;
-      .classification{
-        display: none;
-      }
-      .info{
-        display: none;
-      }
+@media screen and (max-width: 900px) {
+  .blog {
+    grid-template-columns: auto !important;
+    display: block;
+    .classification {
+      display: none;
     }
+    .info {
+      display: none;
+    }
+  }
 }
 .blog {
   p,
@@ -348,6 +357,19 @@ export default {
         width: 80%;
         margin-left: 10%;
         margin-top: 30px;
+      }
+      .google{
+        background-image: url('/static/img/google.png');
+        background-repeat:no-repeat; 
+        background-size:100% 100%;
+        -moz-background-size:100% 100%;
+        width:25px;
+        height: 25px;
+        border:none;
+        position: absolute;
+        display: inline;
+        right: 8px;
+        top: 4px;
       }
     }
     .searchIcon {
