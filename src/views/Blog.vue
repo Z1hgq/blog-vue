@@ -80,6 +80,9 @@
             rel="noopener noreferrer"
           >JS闭包</a>
         </Tag>
+        <Tag>
+          <router-link :to="{name:'JSDataBidirectionaBinding'}">JS实现数据双向绑定</router-link>
+        </Tag>
       </div>
     </div>
   </div>

@@ -51,10 +51,6 @@
   </div>
 </template>
 <script>
-// highlight.js代码高亮指令
-import Vue from 'vue'
-import Highlight from '@/libs/highlightcode';
-Vue.use(Highlight);
 export default {
     name:'sourcecode-layout',
     data(){

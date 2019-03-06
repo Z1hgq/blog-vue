@@ -191,10 +191,17 @@ export default [{
         },
         component: sourceCodeMain,
         children: [{
-            path: '/sourcecode/layout',
-            name: 'sourcecode-layout',
-            component: () =>
-                import ('@/views/sourcecode/Layout.vue')
-        }]
+                path: '/sourcecode/layout',
+                name: 'sourcecode-layout',
+                component: () =>
+                    import ('@/views/sourcecode/Layout.vue')
+            },
+            {
+                path: '/sourcecode/JSDataBidirectionaBinding',
+                name: 'JSDataBidirectionaBinding',
+                component: () =>
+                    import ('@/views/sourcecode/JSDataBidirectionaBinding.vue')
+            }
+        ]
     }
 ]

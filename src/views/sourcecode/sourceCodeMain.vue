@@ -6,6 +6,9 @@
 </template>
 <script>
 import BackToTop from "@/views/public/backToTop.vue";
+import Vue from 'vue'
+import Highlight from '@/libs/highlightcode';
+Vue.use(Highlight);
 export default {
     name:'sourceCodeMain',
     components:{BackToTop},
